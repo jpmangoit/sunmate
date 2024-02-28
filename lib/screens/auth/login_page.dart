@@ -5,6 +5,8 @@ import 'package:sunmate/screens/auth/codevarificarion_page.dart';
 import 'package:sunmate/screens/auth/signup_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constants/constants.dart';
+import '../../localization/localization_contants.dart';
+import '../../widgets/shared/language_select.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,8 +16,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  String email = "test@test.com";
-  String password = 'password';
+  String email = "";
+  String password = '';
   String error = "";
   bool changeButton = false;
   String isSignIn = 'initial';
@@ -36,7 +38,7 @@ class LoginPageState extends State<LoginPage> {
       if (result != 200) {
         setState(() {
           isSignIn = 'initial';
-          error = 'please enter a valid email and password';
+          error = getTranslated(context, 'k_valid_email_pass');
         });
         return;
       }
@@ -52,9 +54,9 @@ class LoginPageState extends State<LoginPage> {
 
   loginButton() {
     if (isSignIn == 'initial') {
-      return const Text(
-        "Login",
-        style: TextStyle(
+      return Text(
+        getTranslated(context, 'k_form_login'),
+        style: const TextStyle(
           color: AppColors.buttonTextColor,
           fontWeight: FontWeight.bold,
           fontSize: 18,
@@ -88,24 +90,43 @@ class LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 20.0,
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        LanguageSelect(),
+                      ],
                     ),
                     Image.asset('assets/images/logo.png'),
+                    Text(
+                      error,
+                      style: const TextStyle(color: Colors.red, fontSize: 16.0),
+                    ),
                     const SizedBox(
-                      height: 10.0,
+                      height: 5.0,
                     ),
-                    const Text(
-                      'Welcome To Sunmate.io',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textColor,
-                      ),
+                     Row(
+                      children: [
+                        Text(
+                        getTranslated(context, 'k_login_welcome'),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textColor,
+                          ),
+                        ),
+                        Text(
+                          getTranslated(context, 'k_auth_app_name'),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.buttonColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    const Text(
-                      'Sign in to your energy automation app',
-                      style: TextStyle(
+                    Text(
+                      getTranslated(context, 'k_login_sub_text'),
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: AppColors.GreyTextColor),
@@ -113,9 +134,9 @@ class LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    const Text(
-                      'Email',
-                      style: TextStyle(
+                    Text(
+                      getTranslated(context, 'k_form_email'),
+                      style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.GreyTextColor),
@@ -127,7 +148,7 @@ class LoginPageState extends State<LoginPage> {
                       style: const TextStyle(color: AppColors.buttonColor),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter email';
+                          return getTranslated(context, 'k_form_require_email');
                         }
                         return null;
                       },
@@ -146,7 +167,7 @@ class LoginPageState extends State<LoginPage> {
                             width: 2.0,
                           ),
                         ),
-                        hintText: "Enter Email",
+                        hintText: getTranslated(context, 'k_form_email_placeholder'),
                         hintStyle: const TextStyle(
                             color: AppColors.textColor,
                             fontSize: 14,
@@ -164,9 +185,9 @@ class LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 15.0,
                     ),
-                    const Text(
-                      'Password',
-                      style: TextStyle(
+                    Text(
+                      getTranslated(context, 'k_form_password'),
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: AppColors.GreyTextColor,
@@ -179,7 +200,7 @@ class LoginPageState extends State<LoginPage> {
                       style: const TextStyle(color: AppColors.buttonColor),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter password';
+                          return getTranslated(context, 'k_form_require_password');
                         }
                         return null;
                       },
@@ -200,7 +221,7 @@ class LoginPageState extends State<LoginPage> {
                             width: 2.0,
                           ),
                         ),
-                        hintText: "Enter Password",
+                        hintText: getTranslated(context, 'k_form_password_placeholder'),
                         hintStyle: const TextStyle(
                             color: AppColors.textColor,
                             fontSize: 14,
@@ -236,9 +257,9 @@ class LoginPageState extends State<LoginPage> {
                               ),
                             );
                           },
-                          child: const Text(
-                            'Forget Password?',
-                            style: TextStyle(
+                          child: Text(
+                              getTranslated(context, 'k_login_forget_password'),
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
                                 color: AppColors.buttonColor),
@@ -247,7 +268,7 @@ class LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 10.0,
                     ),
                     Material(
                       color: AppColors.buttonColor,
@@ -258,6 +279,8 @@ class LoginPageState extends State<LoginPage> {
                                 setState(() {
                                   isSignIn = 'loading';
                                 }),
+                          print( _formKey.currentState)
+                          ,
                                 moveToHome(context)
                               }
                             : null,
@@ -270,14 +293,14 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 10.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Don\'t have an account?',
-                          style: TextStyle(
+                        Text(
+                          getTranslated(context, 'k_login_not_have_account'),
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: AppColors.textColor,
@@ -295,9 +318,9 @@ class LoginPageState extends State<LoginPage> {
                               ),
                             );
                           },
-                          child: const Text(
-                            'Sign up',
-                            style: TextStyle(
+                          child: Text(
+                            getTranslated(context, 'k_form_sign_up'),
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,
                               color: AppColors.buttonColor,
@@ -305,11 +328,6 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ],
-                    ),
-                    const SizedBox(height: 12.0),
-                    Text(
-                      error,
-                      style: const TextStyle(color: Colors.red, fontSize: 20.0),
                     ),
                   ],
                 ),

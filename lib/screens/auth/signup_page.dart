@@ -5,6 +5,8 @@ import 'package:sunmate/screens/auth/login_page.dart';
 import 'package:sunmate/constants/constants.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../localization/localization_contants.dart';
+
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
@@ -13,8 +15,8 @@ class SignupPage extends StatefulWidget {
 }
 
 class SignupPageState extends State<SignupPage> {
-  String email = "test@test.com";
-  String password = 'password';
+  String email = "";
+  String password = '';
   String error = "";
   bool changeButton = false;
   String isSignIn = 'initial';
@@ -36,7 +38,7 @@ class SignupPageState extends State<SignupPage> {
       if (result != 200) {
         setState(() {
           isSignIn = 'initial';
-          error = 'please enter a valid email and password';
+          error = '';
         });
         return;
       }
@@ -51,9 +53,9 @@ class SignupPageState extends State<SignupPage> {
 
   Widget signupButton() {
     if (isSignIn == 'initial') {
-      return const Text(
-        "Sign Up",
-        style: TextStyle(
+      return Text(
+        getTranslated(context, 'k_form_sign_up'),
+        style: const TextStyle(
           color: AppColors.buttonTextColor,
           fontWeight: FontWeight.bold,
           fontSize: 18,
@@ -69,6 +71,35 @@ class SignupPageState extends State<SignupPage> {
     }
   }
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColors.inputColor,
+          title: const Text('Terms & Conditions',style: TextStyle(color: AppColors.textColor)),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',style: TextStyle(color: AppColors.textColor)),
+                Text('Would you like to agree?',style: TextStyle(color: AppColors.textColor),),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close',style: TextStyle(color: AppColors.textColor)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -79,9 +110,9 @@ class SignupPageState extends State<SignupPage> {
           ),
           backgroundColor: AppColors.backgroundColor,
           centerTitle: true,
-          title: const Text('Sign Up',
+          title: Text(getTranslated(context, 'k_form_sign_up'),
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.textColor)),
+              style: const TextStyle(color: AppColors.textColor)),
         ),
         backgroundColor: AppColors.backgroundColor,
         resizeToAvoidBottomInset: true,
@@ -365,7 +396,7 @@ class SignupPageState extends State<SignupPage> {
                           },
                         ),
                         Expanded(
-                          child: Container(
+                          child: TextButton(onPressed: _showMyDialog, child: Container(
                             padding: EdgeInsets.zero,
                             margin: EdgeInsets.zero,
                             child: Wrap(
@@ -415,6 +446,7 @@ class SignupPageState extends State<SignupPage> {
                               ],
                             ),
                           ),
+                        ),
                         ),
                       ],
                     ),

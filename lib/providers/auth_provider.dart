@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/environment.dart';
+import '../models/register.dart';
 
 class Auth with ChangeNotifier {
   static String? _token;
@@ -56,11 +57,31 @@ class Auth with ChangeNotifier {
         .post(Uri.parse(url), body: {"email": username, "password": password});
     var responseData = json.decode(request.body);
     _token = responseData['token'];
+    print(request.statusCode);
+
+    if(request.statusCode != 200) {
+      return request.statusCode;
+    }
     // _autoLogout();
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     final userData = request.body;
     prefs.setString('userData', userData);
     return request.statusCode;
+  }
+
+  Future<void> registerUser(UserRegistration user) async {
+    String url = '${Environment().config.apiHost}api/register';
+
+    final response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(user.toJson()),
+    );
+
+    if (response.statusCode == 201) {
+      print('User registered successfully');
+    } else {
+      print('Failed to register user');
+    }
   }
 }

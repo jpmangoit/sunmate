@@ -1,0 +1,23 @@
+{
+    "k_auth_app_name": "Sunmate.io",
+    "k_login_welcome": "Velkommen til ",
+    "k_login_sub_text": "Log ind på din energiautomatiseringsapp",
+    "k_login_forget_password": "Glem adgangskode?",
+    "k_login_not_have_account": "Har du ikke en konto?",
+    "k_form_login": "Login",
+    "k_form_sign_up": "Tilmeld dig",
+    "k_form_create_account": "Opret ny konto",
+    "k_form_email": "E-mail",
+    "k_form_email_placeholder": "Indtast e-mail",
+    "k_form_require_email": "Indtast venligst e-mail",
+    "k_form_password": "Adgangskode",
+    "k_form_password_placeholder": "Indtast adgangskode",
+    "k_form_require_password": "Indtast venligst adgangskode",
+    "k_valid_email_pass": "Indtast venligst en gyldig e-mail og adgangskode.",
+    "k_home_page": "Hjem",
+    "k_home_today_load": "Indlæs i dag",
+    "k_home_load_info": "Indlæs info sidste 15 minutter",
+    "k_home_today_statistics": "Dagens statistik",
+    "k_home_solar_sell": "Soler sælge",
+    "k_home_grid_charge": "Netafgift"
+}

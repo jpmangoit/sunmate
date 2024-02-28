@@ -44,6 +44,10 @@ dependencies:
   http: ^1.2.0
   permission_handler: ^11.3.0
   sizer: ^2.0.15
+  intl: ^0.18.1
+  flutter_localizations:
+    sdk: flutter
+
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +66,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -72,6 +76,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svg/
+    - lib/languages/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
