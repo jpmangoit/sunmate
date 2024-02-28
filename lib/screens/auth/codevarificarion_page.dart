@@ -5,6 +5,9 @@ import 'package:sunmate/screens/auth/login_page.dart';
 import 'package:sunmate/constants/constants.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../localization/localization_contants.dart';
+import '../../widgets/shared/language_select.dart';
+
 class CodeVerificationPage extends StatefulWidget {
   const CodeVerificationPage({Key? key}) : super(key: key);
 
@@ -13,8 +16,6 @@ class CodeVerificationPage extends StatefulWidget {
 }
 
 class CodeVerificationPageState extends State<CodeVerificationPage> {
-  String email = "test@test.com";
-  String password = 'password';
   String error = "";
   bool changeButton = false;
   String isSignIn = 'initial';
@@ -32,14 +33,14 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       dynamic result;
-      result = await Auth().signInWithEmail(email, password);
-      if (result != 200) {
-        setState(() {
-          isSignIn = 'initial';
-          error = 'please enter a valid email and password';
-        });
-        return;
-      }
+      // result = await Auth().signInWithEmail(email, password);
+      // if (result != 200) {
+      //   setState(() {
+      //     isSignIn = 'initial';
+      //     error = 'please enter a valid email and password';
+      //   });
+      //   return;
+      // }
       if (!mounted) return;
       setState(() {
         isSignIn = 'completed';
@@ -51,9 +52,9 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
 
   Widget verifyButton() {
     if (isSignIn == 'initial') {
-      return const Text(
-        "Verify",
-        style: TextStyle(
+      return Text(
+        getTranslated(context, 'k_verify'),
+        style: const TextStyle(
           color: AppColors.buttonTextColor,
           fontWeight: FontWeight.bold,
           fontSize: 18,
@@ -87,7 +88,7 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
           showCursor: false,
           readOnly: false,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.buttonColor),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.buttonColor),
           keyboardType: TextInputType.number,
           maxLength: 1,
           decoration: InputDecoration(
@@ -114,9 +115,17 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
           ),
           backgroundColor: AppColors.backgroundColor,
           centerTitle: true,
-          title: const Text('Verification',
+          title: Text(
+              getTranslated(context, 'k_verify'),
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.textColor)),
+              style: const TextStyle(color: AppColors.textColor),
+          ),
+          actions: const <Widget>[
+            Padding(
+                padding: EdgeInsets.all(5),
+                child: LanguageSelect()
+            )
+          ],
         ),
         backgroundColor: AppColors.backgroundColor,
         resizeToAvoidBottomInset: true,
@@ -130,17 +139,17 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Enter 4 digits code',
-                    style: TextStyle(
+                  Text(
+                    getTranslated(context, 'k_verify_heading'),
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w400,
                       color: AppColors.textColor,
                     ),
                   ),
-                  const Text(
-                    'Enter 4 digits code that you recevied on your email.',
-                    style: TextStyle(
+                  Text(
+                    getTranslated(context, 'k_verify_sub_text'),
+                    style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: AppColors.GreyTextColor),
@@ -160,25 +169,25 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
 
                     children: [
                       Text(
-                        "I Don't receive any code! ",
-                        style: TextStyle(
+                        getTranslated(context, 'k_verify_resend'),
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: AppColors.textColor,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        "Resend Code",
-                        style: TextStyle(
+                        getTranslated(context, 'k_verify_resend_code'),
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: AppColors.buttonColor,
