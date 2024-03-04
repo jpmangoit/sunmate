@@ -57,6 +57,14 @@ class _MyAppState extends State<MyApp> {
     _auth = Auth();
   }
 
+  void _updateThemeBrightness(BuildContext context, ModelTheme themeNotifier) {
+    if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
+      themeNotifier.isDark = true;
+    } else {
+      themeNotifier.isDark = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -88,27 +96,23 @@ class _MyAppState extends State<MyApp> {
                     ],
                     title: 'Sunmate.io',
                     theme: themeNotifier.isDark
-                        ? ThemeData(
-                            brightness: Brightness.dark,
-                          )
-                        : ThemeData(
-                            brightness: Brightness.light,
-                            primaryColor: Colors.green,
-                            primarySwatch: Colors.green),
+                        ? darkThemeData
+                        : lightThemeData,
                     home: auth.isAuthenticated
                         ? const HomePage()
                         : FutureBuilder(
                             future: auth.autoLogIn(),
-                            builder: (ctx, authResultSnapshot) =>
-                                authResultSnapshot.connectionState ==
-                                        ConnectionState.waiting
-                                    ? Scaffold(
-                                        backgroundColor: getColors(
-                                            themeCustom, 'backgroundColor'),
-                                        body: const CircularProgressIndicator()
-                                            .centered(),
-                                      )
-                                    : const LoginPage(),
+                            builder: (ctx, authResultSnapshot) {
+                              return  authResultSnapshot.connectionState ==
+                                  ConnectionState.waiting
+                                  ? Scaffold(
+                                backgroundColor: getColors(
+                                    themeCustom, 'backgroundColor'),
+                                body: const CircularProgressIndicator()
+                                    .centered(),
+                              )
+                                  : const LoginPage();
+                            }
                           ),
                     routes: allRoutes,
                   );

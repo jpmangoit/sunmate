@@ -11,7 +11,7 @@ class LightColors {
   static const Color inputColor = Color(0xFFFFFFFF);
   static const Color errorColor = Color(0xFFB00020);
   static const Color gridLoad = Color(0xFFFD7448);
-  static const Color battaryLoad = Color(0xFFDCEDC2);
+  static const Color battaryLoad = Color(0xFF4565e7);
   static const Color houseLoad = Color(0xFFFFB800);
   static const Color production = Color(0xFF1AB58D);
   static const Color textColorblack = Color(0xFF000000);
