@@ -87,16 +87,17 @@ class _HomePageState extends State<HomePage> {
                 TextStyle(color: getColors(themeNotifier.isDark, 'textColor')),
           ),
           actions: <Widget>[
+            const Padding(padding: EdgeInsets.all(5), child: LanguageSelect()),
             IconButton(
-                icon: Icon(themeNotifier.isDark
-                    ? Icons.nightlight_round
-                    : Icons.wb_sunny),
+                icon: Icon(
+                  themeNotifier.isDark ? Icons.wb_sunny : Icons.wb_sunny,
+                  color: Color(0xFFF6C517),
+                ),
                 onPressed: () {
                   themeNotifier.isDark
                       ? themeNotifier.isDark = false
                       : themeNotifier.isDark = true;
                 }),
-            const Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
           ],
         ),
         backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
@@ -164,6 +165,65 @@ class _HomePageState extends State<HomePage> {
                   height: 10,
                 ),
                 HomeChartPage(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: getColors(themeNotifier.isDark, 'buttonColor'),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              '\$12.15',
+                              style: TextStyle(
+                                color: getColors(
+                                    themeNotifier.isDark, 'iconColor'),
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              '/',
+                              style: TextStyle(
+                                color: getColors(
+                                    themeNotifier.isDark, 'iconColor'),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              'Kwh',
+                              style: TextStyle(
+                                color: getColors(
+                                    themeNotifier.isDark, 'iconColor'),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          'Current Power Price',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 14,
+                            color: getColors(
+                                themeNotifier.isDark, 'iconColor'),
+
+                          ),
+                        ),
+                      ]),
+                ),
                 const SizedBox(
                   height: 20,
                 ),

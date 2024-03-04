@@ -17,7 +17,7 @@ class LightColors {
   static const Color textColorblack = Color(0xFF000000);
   static const Color textColorwhite = Color(0xFFFFFFFF);
   static const Color dropdownColor = Color(0xFFFFFFFF);
-
+  static const Color iconColor = Color(0xFFFFFFFF);
 
   // Map color names to color values
   static Map<String, Color> colors = {
@@ -35,6 +35,7 @@ class LightColors {
     'production': production,
     'textColorblack': textColorblack,
     'textColorwhite': textColorwhite,
+    'iconColor':iconColor,
     'dropdownColor': dropdownColor,
   };
 }
@@ -56,7 +57,7 @@ class DarkColors {
   static const Color textColorblack = Color(0xFF000000);
   static const Color textColorwhite = Color(0xFFFFFFFF);
   static const Color dropdownColor = Color(0xFFdcedc2);
-
+  static const Color iconColor = Color(0xFF000000);
   // Map color names to color values
   // Map color names to color values
   static Map<String, Color> colors = {
@@ -74,6 +75,7 @@ class DarkColors {
     'production': production,
     'textColorblack': textColorblack,
     'textColorwhite': textColorwhite,
+    'iconColor':iconColor,
     'dropdownColor': dropdownColor,
   };
 }
