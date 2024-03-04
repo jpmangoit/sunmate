@@ -48,7 +48,7 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
         isSignIn = 'completed';
         changeButton = true;
       });
-      await Navigator.pushReplacementNamed(context, '/home');
+      await Navigator.pushReplacementNamed(context, '/firstHome');
     }
   }
 
