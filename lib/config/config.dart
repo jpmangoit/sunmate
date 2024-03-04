@@ -8,7 +8,7 @@ abstract class BaseConfig {
 
 class DevConfig implements BaseConfig {
   @override
-  String get apiHost => "http://103.127.29.85/cms-laravel/public/";
+  String get apiHost => "http://103.127.29.85:5001";
   // String get apiHost => "http://103.127.29.85:8006/";
 
   @override
@@ -59,4 +59,3 @@ class ProdConfig implements BaseConfig {
   // TODO: implement adminMail
   String get adminMail => throw UnimplementedError();
 }
-

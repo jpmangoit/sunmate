@@ -36,20 +36,20 @@ class SignupPageState extends State<SignupPage> {
 
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      dynamic result;
-      result = await Auth().signInWithEmail(email, password);
-      if (result != 200) {
-        setState(() {
-          isSignIn = 'initial';
-          error = '';
-        });
-        return;
-      }
-      if (!mounted) return;
-      setState(() {
-        isSignIn = 'completed';
-        changeButton = true;
-      });
+      // dynamic result;
+      // result = await Auth().signInWithEmail(email, password);
+      // if (result != 200) {
+      //   setState(() {
+      //     isSignIn = 'initial';
+      //     error = '';
+      //   });
+      //   return;
+      // }
+      // if (!mounted) return;
+      // setState(() {
+      //   isSignIn = 'completed';
+      //   changeButton = true;
+      // });
       await Navigator.pushReplacementNamed(context, '/home');
     }
   }
@@ -82,17 +82,19 @@ class SignupPageState extends State<SignupPage> {
         return AlertDialog(
           backgroundColor: getColors(themeNotifier.isDark, 'inputColor'),
           title: Text('Terms & Conditions',
-              style: TextStyle(color: getColors(themeNotifier.isDark, 'textColor'))),
+              style: TextStyle(
+                  color: getColors(themeNotifier.isDark, 'textColor'))),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    style:
-                        TextStyle(color: getColors(themeNotifier.isDark, 'textColor'))),
+                    style: TextStyle(
+                        color: getColors(themeNotifier.isDark, 'textColor'))),
                 Text(
                   'Would you like to agree?',
-                  style: TextStyle(color: getColors(themeNotifier.isDark, 'textColor')),
+                  style: TextStyle(
+                      color: getColors(themeNotifier.isDark, 'textColor')),
                 ),
               ],
             ),
@@ -100,7 +102,8 @@ class SignupPageState extends State<SignupPage> {
           actions: <Widget>[
             TextButton(
               child: Text('Close',
-                  style: TextStyle(color: getColors(themeNotifier.isDark, 'textColor'))),
+                  style: TextStyle(
+                      color: getColors(themeNotifier.isDark, 'textColor'))),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -114,8 +117,7 @@ class SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
-        builder: (context, ModelTheme themeNotifier, child)
-    {
+        builder: (context, ModelTheme themeNotifier, child) {
       return SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -130,7 +132,8 @@ class SignupPageState extends State<SignupPage> {
             ],
             title: Text(getTranslated(context, 'k_form_sign_up'),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: getColors(themeNotifier.isDark, 'textColor'))),
+                style: TextStyle(
+                    color: getColors(themeNotifier.isDark, 'textColor'))),
           ),
           backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
           resizeToAvoidBottomInset: true,
@@ -153,7 +156,8 @@ class SignupPageState extends State<SignupPage> {
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w400,
-                              color: getColors(themeNotifier.isDark, 'textColor'),
+                              color:
+                                  getColors(themeNotifier.isDark, 'textColor'),
                             ),
                           ),
                           Text(
@@ -161,7 +165,8 @@ class SignupPageState extends State<SignupPage> {
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w600,
-                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'buttonColor'),
                             ),
                           ),
                         ],
@@ -171,7 +176,8 @@ class SignupPageState extends State<SignupPage> {
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                            color: getColors(
+                                themeNotifier.isDark, 'GreyTextColor')),
                       ),
                       const SizedBox(
                         height: 20.0,
@@ -181,7 +187,8 @@ class SignupPageState extends State<SignupPage> {
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                            color: getColors(
+                                themeNotifier.isDark, 'GreyTextColor')),
                       ),
                       const SizedBox(
                         height: 5.0,
@@ -199,7 +206,8 @@ class SignupPageState extends State<SignupPage> {
                         },
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: getColors(themeNotifier.isDark, 'inputColor'),
+                          fillColor:
+                              getColors(themeNotifier.isDark, 'inputColor'),
                           contentPadding: const EdgeInsets.all(20),
                           border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -211,21 +219,24 @@ class SignupPageState extends State<SignupPage> {
                               Radius.circular(10),
                             ),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'borderColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'borderColor'),
                               width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'buttonColor'),
                               width: 2.0,
                             ),
                           ),
                           hintText: getTranslated(
                               context, 'k_form_full_name_placeholder'),
                           hintStyle: TextStyle(
-                              color: getColors(themeNotifier.isDark, 'textColor'),
+                              color:
+                                  getColors(themeNotifier.isDark, 'textColor'),
                               fontSize: 14,
                               fontWeight: FontWeight.w400),
                         ),
@@ -238,7 +249,8 @@ class SignupPageState extends State<SignupPage> {
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                            color: getColors(
+                                themeNotifier.isDark, 'GreyTextColor')),
                       ),
                       const SizedBox(
                         height: 5.0,
@@ -256,7 +268,8 @@ class SignupPageState extends State<SignupPage> {
                         },
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: getColors(themeNotifier.isDark, 'inputColor'),
+                          fillColor:
+                              getColors(themeNotifier.isDark, 'inputColor'),
                           contentPadding: const EdgeInsets.all(20),
                           border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -268,21 +281,24 @@ class SignupPageState extends State<SignupPage> {
                               Radius.circular(10),
                             ),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'borderColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'borderColor'),
                               width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'buttonColor'),
                               width: 2.0,
                             ),
                           ),
-                          hintText:
-                          getTranslated(context, 'k_form_email_placeholder'),
+                          hintText: getTranslated(
+                              context, 'k_form_email_placeholder'),
                           hintStyle: TextStyle(
-                              color: getColors(themeNotifier.isDark, 'textColor'),
+                              color:
+                                  getColors(themeNotifier.isDark, 'textColor'),
                               fontSize: 14,
                               fontWeight: FontWeight.w400),
                         ),
@@ -299,7 +315,8 @@ class SignupPageState extends State<SignupPage> {
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                            color: getColors(
+                                themeNotifier.isDark, 'GreyTextColor')),
                       ),
                       const SizedBox(
                         height: 5.0,
@@ -317,7 +334,8 @@ class SignupPageState extends State<SignupPage> {
                         },
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: getColors(themeNotifier.isDark, 'inputColor'),
+                          fillColor:
+                              getColors(themeNotifier.isDark, 'inputColor'),
                           contentPadding: const EdgeInsets.all(20),
                           border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -329,21 +347,24 @@ class SignupPageState extends State<SignupPage> {
                               Radius.circular(10),
                             ),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'borderColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'borderColor'),
                               width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'buttonColor'),
                               width: 2.0,
                             ),
                           ),
                           hintText: getTranslated(
                               context, 'k_form_zipcode_placeholder'),
                           hintStyle: TextStyle(
-                              color: getColors(themeNotifier.isDark, 'textColor'),
+                              color:
+                                  getColors(themeNotifier.isDark, 'textColor'),
                               fontSize: 14,
                               fontWeight: FontWeight.w400),
                         ),
@@ -356,7 +377,8 @@ class SignupPageState extends State<SignupPage> {
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                            color: getColors(
+                                themeNotifier.isDark, 'GreyTextColor')),
                       ),
                       const SizedBox(
                         height: 5.0,
@@ -375,7 +397,8 @@ class SignupPageState extends State<SignupPage> {
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: getColors(themeNotifier.isDark, 'inputColor'),
+                          fillColor:
+                              getColors(themeNotifier.isDark, 'inputColor'),
                           contentPadding: const EdgeInsets.all(20),
                           border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(
@@ -387,21 +410,24 @@ class SignupPageState extends State<SignupPage> {
                               Radius.circular(10),
                             ),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'borderColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'borderColor'),
                               width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'buttonColor'),
                               width: 2.0,
                             ),
                           ),
                           hintText: getTranslated(
                               context, 'k_form_password_placeholder'),
                           hintStyle: TextStyle(
-                              color: getColors(themeNotifier.isDark, 'textColor'),
+                              color:
+                                  getColors(themeNotifier.isDark, 'textColor'),
                               fontSize: 14,
                               fontWeight: FontWeight.w400),
                         ),
@@ -410,12 +436,11 @@ class SignupPageState extends State<SignupPage> {
                           setState(() {});
                         },
                         focusNode: _priceFocusNode,
-                        onFieldSubmitted: (_) =>
-                        {
+                        onFieldSubmitted: (_) => {
                           setState(() {
                             isSignIn = 'loading';
                           }),
-                          moveToHome(context)
+                          // moveToHome(context)
                         },
                       ),
                       const SizedBox(
@@ -426,19 +451,22 @@ class SignupPageState extends State<SignupPage> {
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                            color: getColors(
+                                themeNotifier.isDark, 'GreyTextColor')),
                       ),
                       const SizedBox(
                         height: 5.0,
                       ),
                       DropdownButtonFormField<String>(
-                        dropdownColor: getColors(themeNotifier.isDark, 'inputColor'),
+                        dropdownColor:
+                            getColors(themeNotifier.isDark, 'inputColor'),
                         style: TextStyle(
                             color: getColors(themeNotifier.isDark, 'textColor'),
                             fontSize: 14),
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: getColors(themeNotifier.isDark, 'inputColor'),
+                          fillColor:
+                              getColors(themeNotifier.isDark, 'inputColor'),
                           contentPadding: const EdgeInsets.all(20),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -448,20 +476,23 @@ class SignupPageState extends State<SignupPage> {
                               Radius.circular(10),
                             ),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'borderColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'borderColor'),
                               width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
-                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                              color: getColors(
+                                  themeNotifier.isDark, 'buttonColor'),
                               width: 2.0,
                             ),
                           ),
                           hintText: getTranslated(context, 'k_form_language'),
                           hintStyle: TextStyle(
-                              color: getColors(themeNotifier.isDark, 'textColor'),
+                              color:
+                                  getColors(themeNotifier.isDark, 'textColor'),
                               fontSize: 14,
                               fontWeight: FontWeight.w400),
                         ),
@@ -470,8 +501,8 @@ class SignupPageState extends State<SignupPage> {
                             // selectedLanguage = value!;
                           });
                         },
-                        items: <String>['Danish', 'English'].map((
-                            String value) {
+                        items:
+                            <String>['Danish', 'English'].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -499,10 +530,10 @@ class SignupPageState extends State<SignupPage> {
                               style: TextButton.styleFrom(
                                   padding: EdgeInsets.zero,
                                   minimumSize: Size(50, 30),
-                                  tapTargetSize: MaterialTapTargetSize
-                                      .shrinkWrap,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
                                   alignment: Alignment.centerLeft),
-                              onPressed:() => _showMyDialog(themeNotifier),
+                              onPressed: () => _showMyDialog(themeNotifier),
                               child: Container(
                                 padding: EdgeInsets.zero,
                                 margin: EdgeInsets.zero,
@@ -511,70 +542,69 @@ class SignupPageState extends State<SignupPage> {
                                   children: [
                                     RichText(
                                         text: TextSpan(children: [
-                                          TextSpan(
-                                            text: getTranslated(
-                                                context,
-                                                'k_sign_up_check_term'),
-                                            style: TextStyle(
-                                                color: getColors(
-                                                    themeNotifier.isDark,
-                                                    'GreyTextColor'),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12),
-                                          ),
-                                          TextSpan(
-                                              text: getTranslated(context,
-                                                  'k_sign_up_term_condition'),
-                                              style: TextStyle(
-                                                  decoration:
+                                      TextSpan(
+                                        text: getTranslated(
+                                            context, 'k_sign_up_check_term'),
+                                        style: TextStyle(
+                                            color: getColors(
+                                                themeNotifier.isDark,
+                                                'GreyTextColor'),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12),
+                                      ),
+                                      TextSpan(
+                                          text: getTranslated(context,
+                                              'k_sign_up_term_condition'),
+                                          style: TextStyle(
+                                              decoration:
                                                   TextDecoration.underline,
-                                                  color: getColors(
-                                                      themeNotifier.isDark,
-                                                      'buttonColor'),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12)),
-                                          TextSpan(
-                                            text: " & ",
-                                            style: TextStyle(
-                                                color: getColors(
-                                                    themeNotifier.isDark,
-                                                    'GreyTextColor'),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12),
-                                          ),
-                                          TextSpan(
-                                              text: getTranslated(context,
-                                                  'k_sign_up_private_policy'),
-                                              style: TextStyle(
-                                                  decoration:
+                                              color: getColors(
+                                                  themeNotifier.isDark,
+                                                  'buttonColor'),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12)),
+                                      TextSpan(
+                                        text: " & ",
+                                        style: TextStyle(
+                                            color: getColors(
+                                                themeNotifier.isDark,
+                                                'GreyTextColor'),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12),
+                                      ),
+                                      TextSpan(
+                                          text: getTranslated(context,
+                                              'k_sign_up_private_policy'),
+                                          style: TextStyle(
+                                              decoration:
                                                   TextDecoration.underline,
-                                                  color: getColors(
-                                                      themeNotifier.isDark,
-                                                      'buttonColor'),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12)),
-                                          TextSpan(
-                                            text: " & ",
-                                            style: TextStyle(
-                                                color: getColors(
-                                                    themeNotifier.isDark,
-                                                    'GreyTextColor'),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12),
-                                          ),
-                                          TextSpan(
-                                            text: getTranslated(
-                                                context,
-                                                'k_sign_up_disclaimer'),
-                                            style: TextStyle(
-                                                decoration: TextDecoration
-                                                    .underline,
-                                                color: getColors(
-                                                    themeNotifier.isDark, 'buttonColor'),
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12),
-                                          ),
-                                        ])),
+                                              color: getColors(
+                                                  themeNotifier.isDark,
+                                                  'buttonColor'),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12)),
+                                      TextSpan(
+                                        text: " & ",
+                                        style: TextStyle(
+                                            color: getColors(
+                                                themeNotifier.isDark,
+                                                'GreyTextColor'),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12),
+                                      ),
+                                      TextSpan(
+                                        text: getTranslated(
+                                            context, 'k_sign_up_disclaimer'),
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            color: getColors(
+                                                themeNotifier.isDark,
+                                                'buttonColor'),
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12),
+                                      ),
+                                    ])),
                                   ],
                                 ),
                               ),
@@ -589,14 +619,13 @@ class SignupPageState extends State<SignupPage> {
                         color: getColors(themeNotifier.isDark, 'buttonColor'),
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
-                          onTap: () =>
-                          _formKey.currentState!.validate()
+                          onTap: () => _formKey.currentState!.validate()
                               ? {
-                            setState(() {
-                              isSignIn = 'loading';
-                            }),
-                            moveToHome(context)
-                          }
+                                  setState(() {
+                                    isSignIn = 'loading';
+                                  }),
+                                  moveToHome(context)
+                                }
                               : null,
                           child: AnimatedContainer(
                               duration: const Duration(seconds: 1),
@@ -614,7 +643,8 @@ class SignupPageState extends State<SignupPage> {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: getColors(themeNotifier.isDark, 'textColor'),
+                              color:
+                                  getColors(themeNotifier.isDark, 'textColor'),
                             ),
                           ),
                           TextButton(
@@ -638,7 +668,8 @@ class SignupPageState extends State<SignupPage> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: getColors(themeNotifier.isDark, 'buttonColor'),
+                                color: getColors(
+                                    themeNotifier.isDark, 'buttonColor'),
                               ),
                             ),
                           ),

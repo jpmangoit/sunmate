@@ -7,6 +7,7 @@ import 'package:sunmate/screens/auth/signup_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constants/colors_contant.dart';
 import '../../localization/localization_contants.dart';
+import '../../models/login_model.dart';
 import '../../providers/theme_provider.dart';
 import '../../widgets/shared/language_select.dart';
 
@@ -23,6 +24,8 @@ class LoginPageState extends State<LoginPage> {
   String error = "";
   bool changeButton = false;
   String isSignIn = 'initial';
+  LoginModel? loginModal;
+  var token;
 
   final _priceFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
@@ -36,14 +39,21 @@ class LoginPageState extends State<LoginPage> {
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       dynamic result;
-      result = await Auth().signInWithEmail(email, password);
-      if (result != 200) {
+      loginModal = LoginModel(
+          username: email, password: password, remember: "", isMobile: false);
+      Provider.of<LoginProvider>(context, listen: false)
+          .updateLoginModel(loginModal!);
+      token = await Provider.of<LoginProvider>(context, listen: false).login();
+      print(token);
+      if (token == null) {
+        // _authenticateUser(context);
         setState(() {
           isSignIn = 'initial';
           error = getTranslated(context, 'k_valid_email_pass');
         });
         return;
       }
+
       if (!mounted) return;
       setState(() {
         isSignIn = 'completed';
