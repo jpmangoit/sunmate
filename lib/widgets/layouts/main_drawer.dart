@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sunmate/constants/colors_contant.dart';
 
 import '../../constants/constants.dart';
 import '../../providers/auth_provider.dart';
@@ -13,6 +14,8 @@ class MainDrawerPage extends StatefulWidget {
 }
 
 class _MainDrawerPageState extends State<MainDrawerPage> {
+  var themeCustom = "dark";
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -26,9 +29,10 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
             ),
             child: Row(
               children: [
-                const Text(
+                Text(
                   'Sunmate.io',
-                  style: TextStyle(color: AppColors.textColor, fontSize: 20),
+                  style: TextStyle(
+                      color: getColors(themeCustom, 'textColor'), fontSize: 20),
                 ),
                 const Spacer(),
                 TextButton(
@@ -36,7 +40,8 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
                     Provider.of<Auth>(context, listen: false).logOut();
                     Navigator.of(context).pushReplacementNamed('/');
                   },
-                  child: const Icon(Icons.logout, color: AppColors.textColor),
+                  child: Icon(Icons.logout,
+                      color: getColors(themeCustom, 'textColor')),
                 ),
               ],
             ),

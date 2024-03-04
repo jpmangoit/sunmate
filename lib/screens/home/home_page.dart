@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/localization/demo_localization.dart';
 import 'package:sunmate/main.dart';
 import 'package:sunmate/models/language.dart';
@@ -25,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // Initial Selected Value
   String dropdownvalue = 'Power Slit';
+  var themeCustom = "dark";
 
   // List of items in our dropdown menu
   var items = [
@@ -70,24 +72,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: AppColors.textColor, // Change your color here
+        iconTheme: IconThemeData(
+          color: getColors(themeCustom, 'textColor'), // Change your color here
         ),
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: getColors(themeCustom, 'backgroundColor'),
         centerTitle: true,
         title: Text(
           getTranslated(context, 'k_home_page'),
           textAlign: TextAlign.center,
-          style: const TextStyle(color: AppColors.textColor),
+          style: TextStyle(color: getColors(themeCustom, 'textColor')),
         ),
         actions: const <Widget>[
-          Padding(
-            padding: EdgeInsets.all(5),
-            child: LanguageSelect()
-          )
+          Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
         ],
       ),
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: getColors(themeCustom, 'backgroundColor'),
       resizeToAvoidBottomInset: true,
       drawer: const MainDrawerPage(),
       body: SingleChildScrollView(
@@ -95,12 +94,16 @@ class _HomePageState extends State<HomePage> {
           margin: const EdgeInsets.all(25),
           child: Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     getTranslated(context, 'k_home_load_info'),
-                    style: const TextStyle(color: AppColors.textColor),
+                    style:
+                        TextStyle(color: getColors(themeCustom, 'textColor')),
                   ),
                   const Spacer(),
                   Container(
@@ -108,18 +111,21 @@ class _HomePageState extends State<HomePage> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
-                        color: AppColors.inputColor),
+                        border: Border.all(
+                            color: getColors(themeCustom, 'textColorblack')),
+                        color: getColors(themeCustom, 'dropdownColor')),
                     child: DropdownButton(
                       // isExpanded: true,
-                      dropdownColor: AppColors.inputColor,
-                      style: const TextStyle(
-                          color: AppColors.textColor, fontSize: 12),
+                      dropdownColor: getColors(themeCustom, 'dropdownColor'),
+                      style: TextStyle(
+                          color: getColors(themeCustom, 'textColorblack'),
+                          fontSize: 12),
                       value: dropdownvalue,
                       isDense: true,
                       underline: const SizedBox(),
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.keyboard_arrow_down,
-                        color: AppColors.textColor,
+                        color: getColors(themeCustom, 'textColorblack'),
                       ),
                       items: items.map((String items) {
                         return DropdownMenuItem(
@@ -147,8 +153,9 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                  getTranslated(context, 'k_home_today_load'),
-                    style: const TextStyle(color: AppColors.textColor),
+                    getTranslated(context, 'k_home_today_load'),
+                    style:
+                        TextStyle(color: getColors(themeCustom, 'textColor')),
                   ),
                 ],
               ),
@@ -174,7 +181,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     getTranslated(context, 'k_home_today_statistics'),
-                    style: const TextStyle(color: AppColors.textColor),
+                    style:
+                        TextStyle(color: getColors(themeCustom, 'textColor')),
                   ),
                 ],
               ),
@@ -185,59 +193,6 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.inputColor,
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      getTranslated(context, 'k_home_solar_sell'),
-                      style: const TextStyle(color: AppColors.textColor),
-                    ),
-                    const Spacer(),
-                    Switch(
-                      value: isSwitchedSolerSell,
-                      onChanged: _toggleSolerSwitch,
-                      activeTrackColor: AppColors.textColor,
-                      activeColor: AppColors.inputColor,
-                      inactiveTrackColor: AppColors.GreyTextColor,
-                      inactiveThumbColor: AppColors.inputColor,
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.inputColor,
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      getTranslated(context, 'k_home_grid_charge'),
-                      style: const TextStyle(color: AppColors.textColor),
-                    ),
-                    const Spacer(),
-                    Switch(
-                      value: isSwitched,
-                      onChanged: _toggleSwitch,
-                      activeTrackColor: AppColors.textColor,
-                      activeColor: AppColors.inputColor,
-                      inactiveTrackColor: AppColors.GreyTextColor,
-                      inactiveThumbColor: AppColors.inputColor,
-                    )
-                  ],
-                ),
-              )
             ],
           ),
         ),

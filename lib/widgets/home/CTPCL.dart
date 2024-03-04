@@ -14,7 +14,7 @@ class _CTPVLPageState extends State<CTPVLPage> {
   Widget build(BuildContext context) {
     return Container(
       padding:
-      const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+      const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         border:

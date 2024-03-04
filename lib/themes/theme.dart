@@ -13,7 +13,22 @@ ThemeData themedata = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.backgroundColor,
-        foregroundColor: Colors.black)
-    ,
+        foregroundColor: Colors.black),
   ),
 );
+
+ThemeData lightThemeData = ThemeData(
+
+    primaryColor: Colors.green,
+  useMaterial3: true,
+  fontFamily: 'Poppins',
+    brightness: Brightness.light
+);
+
+ThemeData darkThemeData = ThemeData(
+  primaryColor: Colors.red,
+  useMaterial3: true,
+  fontFamily: 'Poppins',
+  brightness: Brightness.dark
+);
+

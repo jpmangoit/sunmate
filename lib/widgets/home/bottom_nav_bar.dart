@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sunmate/constants/colors_contant.dart';
 
 import '../../constants/constants.dart';
 
@@ -11,6 +12,8 @@ class BottomNavBarPage extends StatefulWidget {
 }
 
 class _BottomNavBarPageState extends State<BottomNavBarPage> {
+  var themeCustom = "dark";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +24,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
         children: [
           IconButton(
             icon: Icon(Icons.home_outlined),
-            color: AppColors.textColor,
+            color: getColors(themeCustom, 'textColor'),
             onPressed: () {
               // Handle home icon press
             },

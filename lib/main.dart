@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/localization/demo_localization.dart';
 import 'package:sunmate/providers/auth_provider.dart';
 import 'package:sunmate/providers/home_provider.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late Locale _locale = const Locale('en');
   late Auth _auth;
+  var themeCustom = "dark";
 
   void setLocale(Locale locale) {
     setState(() {
@@ -88,21 +90,24 @@ class _MyAppState extends State<MyApp> {
                   Locale('da'), // Danish
                 ],
                 title: 'Sunmate.io',
-                theme: themedata,
+                theme: lightThemeData,
+                darkTheme: darkThemeData,
+                themeMode: ThemeMode.system,
                 home: auth.isAuthenticated
                     ? const HomePage()
                     : FutureBuilder(
-                  future: auth.autoLogIn(),
-                  builder: (ctx, authResultSnapshot) =>
-                  authResultSnapshot.connectionState ==
-                      ConnectionState.waiting
-                      ? Scaffold(
-                    backgroundColor: AppColors.backgroundColor,
-                    body: const CircularProgressIndicator()
-                        .centered(),
-                  )
-                      : const LoginPage(),
-                ),
+                        future: auth.autoLogIn(),
+                        builder: (ctx, authResultSnapshot) => authResultSnapshot
+                                    .connectionState ==
+                                ConnectionState.waiting
+                            ? Scaffold(
+                                backgroundColor:
+                                    getColors(themeCustom, 'backgroundColor'),
+                                body: const CircularProgressIndicator()
+                                    .centered(),
+                              )
+                            : const LoginPage(),
+                      ),
                 routes: allRoutes,
               );
             },

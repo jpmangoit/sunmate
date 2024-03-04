@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sunmate/constants/colors_contant.dart';
 
 import '../../constants/constants.dart';
 
@@ -11,6 +12,8 @@ class TodayLoadPage extends StatefulWidget {
 }
 
 class _TodayLoadPageState extends State<TodayLoadPage> {
+  var themeCustom = "dark";
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -18,61 +21,65 @@ class _TodayLoadPageState extends State<TodayLoadPage> {
         shrinkWrap: true,
         itemCount: 4,
         itemBuilder: (ctx, i) {
-          return Card(
-            color: AppColors.inputColor,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: const EdgeInsets.all(5),
-              padding: const EdgeInsets.all(15),
-              child: Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.buttonColor,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: const Icon(
-                          Icons.home_outlined,
-                          size: 20,
-                          color: AppColors.GreyTextColor,
-                        ),
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: AppColors.borderColor),
+            ),
+            margin: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(25),
+            child: Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: getColors(themeCustom, 'buttonColor'),
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      padding: const EdgeInsets.all(10),
+                      child: Icon(
+                        Icons.home_outlined,
+                        size: 25,
+                        color: getColors(themeCustom, 'textColorwhite'),
                       ),
-                      const Text(
-                        '350 W',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.buttonColor),
-                      ),
-                      const Text(
-                        'House Load',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                            color: AppColors.GreyTextColor),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      '350 W',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: getColors(themeCustom, 'buttonColor')),
+                    ),
+                     Text(
+                      'House Load',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: getColors(themeCustom, 'GreyTextColor')),
+                    ),
+                     Text(
+                      'Today 12 kWh',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: AppColors.GreyTextColor ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           );
         },
+        // scrollDirection: Axis.horizontal,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 1,
-          crossAxisSpacing: 0.0,
+          childAspectRatio: 0.9,
           mainAxisSpacing: 1,
-          mainAxisExtent: 150,
         ),
       ),
     );

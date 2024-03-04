@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sunmate/constants/colors_contant.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../constants/constants.dart';
@@ -21,6 +22,8 @@ class HomeChartPage extends StatefulWidget {
 }
 
 class _HomeChartPageState extends State<HomeChartPage> {
+  var themeCustom = "dark";
+
   List<_ChartData> data2 = [
     _ChartData('50w', 15, 15, 15, 15),
     _ChartData('100w', 25, 30, 25, 30),
@@ -30,30 +33,23 @@ class _HomeChartPageState extends State<HomeChartPage> {
     _ChartData('300w', 10, 10, 8, 25),
   ];
 
-  final colorList = [
-    const Color.fromRGBO(220, 237, 194, 1),
-    const Color.fromRGBO(253, 116, 72, 1),
-    const Color.fromRGBO(26, 181, 141, 1),
-    const Color.fromRGBO(255, 184, 0, 1),
-  ];
-
   List<StackedColumnSeries<_ChartData, String>> _getStackedColumnSeries() {
     return <StackedColumnSeries<_ChartData, String>>[
       StackedColumnSeries<_ChartData, String>(
           dataSource: data2,
-          color: colorList[3],
+          color: getColors(themeCustom, 'houseLoad'),
           xValueMapper: (_ChartData sales, _) => sales.x,
           yValueMapper: (_ChartData sales, _) => sales.y1,
           name: 'House Load'),
       StackedColumnSeries<_ChartData, String>(
           dataSource: data2,
-          color: colorList[2],
+          color: getColors(themeCustom, 'production'),
           xValueMapper: (_ChartData sales, _) => sales.x,
           yValueMapper: (_ChartData sales, _) => sales.y2,
           name: 'Production'),
       StackedColumnSeries<_ChartData, String>(
           dataSource: data2,
-          color: colorList[1],
+          color: getColors(themeCustom, 'gridLoad'),
           xValueMapper: (_ChartData sales, _) => sales.x,
           yValueMapper: (_ChartData sales, _) => sales.y3,
           name: 'Grid Load'),
@@ -61,7 +57,7 @@ class _HomeChartPageState extends State<HomeChartPage> {
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(25), topRight: Radius.circular(25)),
           dataSource: data2,
-          color: colorList[0],
+          color: getColors(themeCustom, 'battaryLoad'),
           xValueMapper: (_ChartData sales, _) => sales.x,
           yValueMapper: (_ChartData sales, _) => sales.y4,
           name: 'Battery Load')
@@ -71,19 +67,15 @@ class _HomeChartPageState extends State<HomeChartPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: AppColors.inputColor,
-      ),
       height: 250,
       child: SfCartesianChart(
         plotAreaBorderWidth: 0,
-        legend: const Legend(
+        legend: Legend(
           orientation: LegendItemOrientation.vertical,
           alignment: ChartAlignment.far,
           overflowMode: LegendItemOverflowMode.wrap,
           textStyle: TextStyle(
-            color: AppColors.GreyTextColor,
+            color: getColors(themeCustom, 'GreyTextColor'),
             fontWeight: FontWeight.w600,
             fontSize: 12,
           ),
@@ -96,18 +88,18 @@ class _HomeChartPageState extends State<HomeChartPage> {
           ),
           majorTickLines: MajorTickLines(size: 0, width: 0),
         ),
-        primaryYAxis: const NumericAxis(
+        primaryYAxis: NumericAxis(
           axisLine: AxisLine(width: 0),
           labelFormat: '{value}K',
           majorGridLines: MajorGridLines(
               width: 1,
-              color: AppColors.GreyTextColor,
+              color: getColors(themeCustom, 'GreyTextColor'),
               dashArray: <double>[1, 1]),
           majorTickLines: MajorTickLines(size: 0, width: 0),
         ),
         series: _getStackedColumnSeries(),
-        tooltipBehavior: TooltipBehavior(
-            enable: true, header: '', canShowMarker: false),
+        tooltipBehavior:
+            TooltipBehavior(enable: true, header: '', canShowMarker: false),
       ),
     );
   }

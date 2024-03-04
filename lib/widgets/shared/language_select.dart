@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sunmate/constants/colors_contant.dart';
 
 import '../../constants/constants.dart';
 import '../../main.dart';
@@ -13,6 +14,7 @@ class LanguageSelect extends StatefulWidget {
 }
 
 class _LanguageSelectState extends State<LanguageSelect> {
+  var themeCustom = "dark";
   void _changeLanguage(Language language) {
     print(language.flage);
     Locale _temp;
@@ -40,7 +42,7 @@ class _LanguageSelectState extends State<LanguageSelect> {
           _changeLanguage(language);
         }
       },
-      icon: Icon(Icons.language, color: AppColors.textColor),
+      icon: Icon(Icons.language, color: getColors(themeCustom, 'textColor')),
       items: Language.languageList()
           .map<DropdownMenuItem<Language>>(
             (lang) => DropdownMenuItem<Language>(
@@ -48,8 +50,13 @@ class _LanguageSelectState extends State<LanguageSelect> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Text(lang.flage,style: TextStyle(color: AppColors.textColor)), // corrected from lang.flage to lang.flag
-                  Text(lang.name,style: TextStyle(color: AppColors.textColor)),
+                  Text(lang.flage,
+                      style: TextStyle(
+                          color: getColors(themeCustom,
+                              'textColor'))), // corrected from lang.flage to lang.flag
+                  Text(lang.name,
+                      style: TextStyle(
+                          color: getColors(themeCustom, 'textColor'))),
                 ],
               ),
             ),
