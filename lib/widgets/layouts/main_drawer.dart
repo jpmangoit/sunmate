@@ -14,7 +14,7 @@ class MainDrawerPage extends StatefulWidget {
 }
 
 class _MainDrawerPageState extends State<MainDrawerPage> {
-  var themeCustom = "dark";
+  var themeCustom = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +24,8 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
         children: <Widget>[
           Container(
             padding: const EdgeInsets.only(left: 15, top: 50, bottom: 20),
-            decoration: const BoxDecoration(
-              color: AppColors.inputColor,
+            decoration:  BoxDecoration(
+              color: getColors(themeCustom, 'inputColor'),
             ),
             child: Row(
               children: [

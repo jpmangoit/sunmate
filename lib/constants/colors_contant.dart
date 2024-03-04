@@ -78,10 +78,10 @@ class DarkColors {
   };
 }
 
-Color getColors(String mode, String color) {
-  return (mode != "dark" ? LightColors.colors[color] : DarkColors.colors[color]) ?? Colors.transparent;
+Color getColors(bool mode, String color) {
+  return (mode ? DarkColors.colors[color] : LightColors.colors[color]) ?? Colors.transparent;
 }
 
-String getLogo(String mode) {
-  return mode != "dark" ? "light-logo.png" : "dark-logo.png";
+String getLogo(bool mode) {
+  return mode ? "dark-logo.png" : "light-logo.png";
 }

@@ -15,6 +15,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../constants/constants.dart';
 import '../../localization/localization_contants.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,7 +27,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // Initial Selected Value
   String dropdownvalue = 'Power Slit';
-  var themeCustom = "dark";
 
   // List of items in our dropdown menu
   var items = [
@@ -70,134 +70,153 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: getColors(themeCustom, 'textColor'), // Change your color here
+    return Consumer<ModelTheme>(
+        builder: (context, ModelTheme themeNotifier, child) {
+      return Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: getColors(
+                themeNotifier.isDark, 'textColor'), // Change your color here
+          ),
+          backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+          centerTitle: true,
+          title: Text(
+            getTranslated(context, 'k_home_page'),
+            textAlign: TextAlign.center,
+            style:
+                TextStyle(color: getColors(themeNotifier.isDark, 'textColor')),
+          ),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(themeNotifier.isDark
+                    ? Icons.nightlight_round
+                    : Icons.wb_sunny),
+                onPressed: () {
+                  themeNotifier.isDark
+                      ? themeNotifier.isDark = false
+                      : themeNotifier.isDark = true;
+                }),
+            Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
+          ],
         ),
-        backgroundColor: getColors(themeCustom, 'backgroundColor'),
-        centerTitle: true,
-        title: Text(
-          getTranslated(context, 'k_home_page'),
-          textAlign: TextAlign.center,
-          style: TextStyle(color: getColors(themeCustom, 'textColor')),
-        ),
-        actions: const <Widget>[
-          Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
-        ],
-      ),
-      backgroundColor: getColors(themeCustom, 'backgroundColor'),
-      resizeToAvoidBottomInset: true,
-      drawer: const MainDrawerPage(),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(25),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    getTranslated(context, 'k_home_load_info'),
-                    style:
-                        TextStyle(color: getColors(themeCustom, 'textColor')),
-                  ),
-                  const Spacer(),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        border: Border.all(
-                            color: getColors(themeCustom, 'textColorblack')),
-                        color: getColors(themeCustom, 'dropdownColor')),
-                    child: DropdownButton(
-                      // isExpanded: true,
-                      dropdownColor: getColors(themeCustom, 'dropdownColor'),
+        backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+        resizeToAvoidBottomInset: true,
+        drawer: const MainDrawerPage(),
+        body: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.all(25),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      getTranslated(context, 'k_home_load_info'),
                       style: TextStyle(
-                          color: getColors(themeCustom, 'textColorblack'),
-                          fontSize: 12),
-                      value: dropdownvalue,
-                      isDense: true,
-                      underline: const SizedBox(),
-                      icon: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: getColors(themeCustom, 'textColorblack'),
-                      ),
-                      items: items.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue = newValue!;
-                        });
-                      },
+                          color: getColors(themeNotifier.isDark, 'textColor')),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              HomeChartPage(),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    getTranslated(context, 'k_home_today_load'),
-                    style:
-                        TextStyle(color: getColors(themeCustom, 'textColor')),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const TodayLoadPage(),
-              const SizedBox(
-                height: 10,
-              ),
-              const Row(
-                children: [
-                  HomeCTPVPage(heading: "Internal CT"),
-                  HomeCTPVPage(heading: "External CT"),
-                  HomeCTPVPage(heading: "PV"),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    getTranslated(context, 'k_home_today_statistics'),
-                    style:
-                        TextStyle(color: getColors(themeCustom, 'textColor')),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TodayStaticsticsPage(dataStatistics: DataStaticstics),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          border: Border.all(
+                              color: getColors(
+                                  themeNotifier.isDark, 'textColorblack')),
+                          color:
+                              getColors(themeNotifier.isDark, 'dropdownColor')),
+                      child: DropdownButton(
+                        // isExpanded: true,
+                        dropdownColor:
+                            getColors(themeNotifier.isDark, 'dropdownColor'),
+                        style: TextStyle(
+                            color: getColors(
+                                themeNotifier.isDark, 'textColorblack'),
+                            fontSize: 12),
+                        value: dropdownvalue,
+                        isDense: true,
+                        underline: const SizedBox(),
+                        icon: Icon(
+                          Icons.keyboard_arrow_down,
+                          color:
+                              getColors(themeNotifier.isDark, 'textColorblack'),
+                        ),
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                HomeChartPage(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      getTranslated(context, 'k_home_today_load'),
+                      style: TextStyle(
+                          color: getColors(themeNotifier.isDark, 'textColor')),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const TodayLoadPage(),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Row(
+                  children: [
+                    HomeCTPVPage(heading: "Internal CT"),
+                    HomeCTPVPage(heading: "External CT"),
+                    HomeCTPVPage(heading: "PV"),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      getTranslated(context, 'k_home_today_statistics'),
+                      style: TextStyle(
+                          color: getColors(themeNotifier.isDark, 'textColor')),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TodayStaticsticsPage(dataStatistics: DataStaticstics),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavBarPage(),
-    );
+        bottomNavigationBar: BottomNavBarPage(),
+      );
+    });
   }
 }

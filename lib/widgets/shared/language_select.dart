@@ -14,7 +14,7 @@ class LanguageSelect extends StatefulWidget {
 }
 
 class _LanguageSelectState extends State<LanguageSelect> {
-  var themeCustom = "dark";
+  var themeCustom = true;
   void _changeLanguage(Language language) {
     print(language.flage);
     Locale _temp;
@@ -35,7 +35,7 @@ class _LanguageSelectState extends State<LanguageSelect> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-      dropdownColor: AppColors.inputColor,
+      dropdownColor: getColors(themeCustom, 'inputColor'),
       underline: SizedBox(),
       onChanged: (Language? language) {
         if (language != null) {

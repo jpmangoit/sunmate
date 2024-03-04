@@ -7,6 +7,7 @@ import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/localization/demo_localization.dart';
 import 'package:sunmate/providers/auth_provider.dart';
 import 'package:sunmate/providers/home_provider.dart';
+import 'package:sunmate/providers/theme_provider.dart';
 import 'package:sunmate/routes/routes.dart';
 import 'package:sunmate/screens/auth/login_page.dart';
 import 'package:sunmate/screens/home/home_page.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late Locale _locale = const Locale('en');
   late Auth _auth;
-  var themeCustom = "dark";
+  var themeCustom = true;
 
   void setLocale(Locale locale) {
     setState(() {
@@ -65,53 +66,56 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) {
-          return Sizer(
-            builder: (BuildContext context, Orientation orientation,
-                DeviceType deviceType) {
-              return MaterialApp(
-                localizationsDelegates: const [
-                  DemoLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                locale: _locale,
-                localeListResolutionCallback: (deviceLocale, supportedLocales) {
-                  // for (var locale in supportedLocales) {
-                  //   if (deviceLocale != null && locale.languageCode == deviceLocale.languageCode &&
-                  //       locale.countryCode == deviceLocale.countryCode) {
-                  //     return locale;
-                  //   }
-                  // }
-                  // return supportedLocales.first;
+          return Sizer(builder: (BuildContext context, Orientation orientation,
+              DeviceType deviceType) {
+            return ChangeNotifierProvider(
+              create: (_) => ModelTheme(),
+              child: Consumer<ModelTheme>(
+                builder: (context, ModelTheme themeNotifier, child) {
+                  return MaterialApp(
+                    localizationsDelegates: const [
+                      DemoLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    locale: _locale,
+                    localeListResolutionCallback:
+                        (deviceLocale, supportedLocales) {},
+                    supportedLocales: const [
+                      Locale('en'), // English
+                      Locale('da'), // Danish
+                    ],
+                    title: 'Sunmate.io',
+                    theme: themeNotifier.isDark
+                        ? ThemeData(
+                            brightness: Brightness.dark,
+                          )
+                        : ThemeData(
+                            brightness: Brightness.light,
+                            primaryColor: Colors.green,
+                            primarySwatch: Colors.green),
+                    home: auth.isAuthenticated
+                        ? const HomePage()
+                        : FutureBuilder(
+                            future: auth.autoLogIn(),
+                            builder: (ctx, authResultSnapshot) =>
+                                authResultSnapshot.connectionState ==
+                                        ConnectionState.waiting
+                                    ? Scaffold(
+                                        backgroundColor: getColors(
+                                            themeCustom, 'backgroundColor'),
+                                        body: const CircularProgressIndicator()
+                                            .centered(),
+                                      )
+                                    : const LoginPage(),
+                          ),
+                    routes: allRoutes,
+                  );
                 },
-                supportedLocales: const [
-                  Locale('en'), // English
-                  Locale('da'), // Danish
-                ],
-                title: 'Sunmate.io',
-                theme: lightThemeData,
-                darkTheme: darkThemeData,
-                themeMode: ThemeMode.system,
-                home: auth.isAuthenticated
-                    ? const HomePage()
-                    : FutureBuilder(
-                        future: auth.autoLogIn(),
-                        builder: (ctx, authResultSnapshot) => authResultSnapshot
-                                    .connectionState ==
-                                ConnectionState.waiting
-                            ? Scaffold(
-                                backgroundColor:
-                                    getColors(themeCustom, 'backgroundColor'),
-                                body: const CircularProgressIndicator()
-                                    .centered(),
-                              )
-                            : const LoginPage(),
-                      ),
-                routes: allRoutes,
-              );
-            },
-          );
+              ),
+            );
+          });
         },
       ),
     );

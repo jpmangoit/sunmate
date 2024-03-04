@@ -21,7 +21,7 @@ class LoginPageState extends State<LoginPage> {
   String error = "";
   bool changeButton = false;
   String isSignIn = 'initial';
-  var themeCustom = "dark";
+  var themeCustom = true;
 
   final _priceFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();

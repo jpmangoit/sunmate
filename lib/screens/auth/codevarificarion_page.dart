@@ -24,7 +24,7 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   final _formKey = GlobalKey<FormState>();
   String selectedLanguage = 'English';
   bool isChecked = false;
-  var themeCustom = "dark";
+  var themeCustom = true;
 
   @override
   void dispose() {

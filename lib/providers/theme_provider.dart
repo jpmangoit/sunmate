@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'mtTheme_preference.dart';
 
-import '../themes/theme.dart';
+class ModelTheme extends ChangeNotifier {
+  late bool _isDark;
+  late MyThemePreferences _preferences;
+  bool get isDark => _isDark;
 
-enum ThemeMode { light, dark }
+  ModelTheme() {
+    _isDark = false;
+    _preferences = MyThemePreferences();
+    getPreferences();
+  }
+//Switching the themes
+  set isDark(bool value) {
+    _isDark = value;
+    _preferences.setTheme(value);
+    notifyListeners();
+  }
 
-class ThemeProvider extends ChangeNotifier {
-  ThemeData _themeData = lightThemeData;
-  ThemeMode _themeMode = ThemeMode.light;
-
-  ThemeData getTheme() => _themeData;
-  ThemeMode getThemeMode() => _themeMode;
-
-  void toggleTheme() {
-    _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    _themeData = _themeMode == ThemeMode.light ? lightThemeData : darkThemeData;
+  getPreferences() async {
+    _isDark = await _preferences.getTheme();
     notifyListeners();
   }
 }
