@@ -121,8 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
     authenticationCompleted = false;
+    super.dispose();
   }
 
   Future<Widget> _authenticateUser(BuildContext context) async {
@@ -184,49 +184,49 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     print('plog$isLogin');
     return isLogin ? _buildAuthWidget(context) : LoginPage();
-
-    // if (isLogin) {
-    //   // Call the content of the authentication dialog function directly
-    //   return FutureBuilder(
-    //     future: _authenticateUser(context),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         if (snapshot.hasError) {
-    //           return Center(
-    //             child: Text('Error: ${snapshot.error}'),
-    //           );
-    //         }
-    //         return snapshot.data ?? Container();
-    //       } else {
-    //         return Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       }
-    //     },
-    //   );
-    // } else {
-    //   // Return login screen
-    //   return LoginPage();
-    // }
   }
 
+  // Widget _buildAuthWidget(BuildContext context) {
+  //   return FutureBuilder(
+  //     future: _authenticateUser(context),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState == ConnectionState.done) {
+  //         if (snapshot.hasError) {
+  //           return Center(
+  //             child: Text('Error: ${snapshot.error}'),
+  //           );
+  //         }
+  //         return snapshot.data ?? Container();
+  //       } else {
+  //         return Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
   Widget _buildAuthWidget(BuildContext context) {
-    return FutureBuilder(
-      future: _authenticateUser(context),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
+    if (!authenticationCompleted) {
+      // Only show authentication dialog if authentication is not completed
+      return FutureBuilder(
+        future: _authenticateUser(context),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
+            return snapshot.data ?? Container();
+          } else {
             return Center(
-              child: Text('Error: ${snapshot.error}'),
+              child: CircularProgressIndicator(),
             );
           }
-          return snapshot.data ?? Container();
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
+        },
+      );
+    } else {
+      return SizedBox(); // Return empty container if authentication is completed
+    }
   }
 }
