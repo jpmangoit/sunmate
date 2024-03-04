@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/providers/auth_provider.dart';
 import 'package:sunmate/screens/auth/login_page.dart';
@@ -7,6 +8,7 @@ import 'package:sunmate/constants/constants.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../localization/localization_contants.dart';
+import '../../providers/theme_provider.dart';
 import '../../widgets/shared/language_select.dart';
 
 class CodeVerificationPage extends StatefulWidget {
@@ -24,7 +26,6 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   final _formKey = GlobalKey<FormState>();
   String selectedLanguage = 'English';
   bool isChecked = false;
-  var themeCustom = true;
 
   @override
   void dispose() {
@@ -52,12 +53,12 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
     }
   }
 
-  Widget verifyButton() {
+  Widget verifyButton(themeNotifier) {
     if (isSignIn == 'initial') {
       return Text(
         getTranslated(context, 'k_verify_button'),
         style: TextStyle(
-          color: getColors(themeCustom, 'buttonTextColor'),
+          color: getColors(themeNotifier.isDark, 'buttonTextColor'),
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
@@ -67,12 +68,12 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
     } else {
       return Icon(
         Icons.done,
-        color: getColors(themeCustom, 'buttonTextColor'),
+        color: getColors(themeNotifier.isDark, 'buttonTextColor'),
       );
     }
   }
 
-  Widget _textFieldOTP({bool? first, last}) {
+  Widget _textFieldOTP({bool? first, last, themeNotifier}) {
     return Container(
       height: 65,
       child: AspectRatio(
@@ -93,7 +94,7 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
           style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: getColors(themeCustom, 'buttonColor')),
+              color: getColors(themeNotifier.isDark, 'buttonColor')),
           keyboardType: TextInputType.number,
           maxLength: 1,
           decoration: InputDecoration(
@@ -102,12 +103,12 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   width: 1,
-                  color: getColors(themeCustom, 'borderColor'),
+                  color: getColors(themeNotifier.isDark, 'borderColor'),
                 ),
                 borderRadius: BorderRadius.circular(12)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    width: 2, color: getColors(themeCustom, 'buttonColor')),
+                    width: 2, color: getColors(themeNotifier.isDark, 'buttonColor')),
                 borderRadius: BorderRadius.circular(12)),
           ),
         ),
@@ -117,136 +118,142 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: getColors(themeCustom, 'textColor'), //change your color here
+    return Consumer<ModelTheme>(
+        builder: (context, ModelTheme themeNotifier, child)
+    {
+      return SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: getColors(
+                  themeNotifier.isDark, 'textColor'), //change your color here
+            ),
+            backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+            centerTitle: true,
+            title: Text(
+              getTranslated(context, 'k_verify'),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: getColors(themeNotifier.isDark, 'textColor')),
+            ),
+            actions: const <Widget>[
+              Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
+            ],
           ),
-          backgroundColor: getColors(themeCustom, 'backgroundColor'),
-          centerTitle: true,
-          title: Text(
-            getTranslated(context, 'k_verify'),
-            textAlign: TextAlign.center,
-            style: TextStyle(color: getColors(themeCustom, 'textColor')),
-          ),
-          actions: const <Widget>[
-            Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
-          ],
-        ),
-        backgroundColor: getColors(themeCustom, 'backgroundColor'),
-        resizeToAvoidBottomInset: false,
-        body: Form(
-          key: _formKey,
-          child: Container(
-            padding: const EdgeInsets.all(30),
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      getTranslated(context, 'k_verify_heading'),
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w400,
-                        color: getColors(themeCustom, 'textColor'),
+          backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+          resizeToAvoidBottomInset: false,
+          body: Form(
+            key: _formKey,
+            child: Container(
+              padding: const EdgeInsets.all(30),
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        getTranslated(context, 'k_verify_heading'),
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w400,
+                          color: getColors(themeNotifier.isDark, 'textColor'),
+                        ),
                       ),
-                    ),
-                    Text(
-                      getTranslated(context, 'k_verify_digits_code'),
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w600,
-                        color: getColors(themeCustom, 'buttonColor'),
+                      Text(
+                        getTranslated(context, 'k_verify_digits_code'),
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w600,
+                          color: getColors(themeNotifier.isDark, 'buttonColor'),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Text(
-                  getTranslated(context, 'k_verify_sub_text'),
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: getColors(themeCustom, 'GreyTextColor')),
-                ),
-                const SizedBox(
-                  height: 40.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _textFieldOTP(first: true, last: false),
-                    _textFieldOTP(first: false, last: false),
-                    _textFieldOTP(first: false, last: false),
-                    _textFieldOTP(first: false, last: true),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      getTranslated(context, 'k_verify_resend'),
-                      style: TextStyle(
+                    ],
+                  ),
+                  Text(
+                    getTranslated(context, 'k_verify_sub_text'),
+                    style: TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: getColors(themeCustom, 'textColor'),
+                        fontWeight: FontWeight.w500,
+                        color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                  ),
+                  const SizedBox(
+                    height: 40.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _textFieldOTP(first: true, last: false, themeNotifier: themeNotifier),
+                      _textFieldOTP(first: false, last: false, themeNotifier: themeNotifier),
+                      _textFieldOTP(first: false, last: false, themeNotifier: themeNotifier),
+                      _textFieldOTP(first: false, last: true, themeNotifier: themeNotifier),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        getTranslated(context, 'k_verify_resend'),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: getColors(themeNotifier.isDark, 'textColor'),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      getTranslated(context, 'k_verify_resend_code'),
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: getColors(themeCustom, 'buttonColor'),
-                        decoration: TextDecoration.underline,
+                      const SizedBox(
+                        height: 5,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Material(
-                      color: getColors(themeCustom, 'buttonColor'),
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        onTap: () => _formKey.currentState!.validate()
-                            ? {
-                                setState(() {
-                                  isSignIn = 'loading';
-                                }),
-                                moveToHome(context)
-                              }
-                            : null,
-                        child: AnimatedContainer(
-                            duration: const Duration(seconds: 1),
-                            width: 400,
-                            height: 60,
-                            alignment: Alignment.center,
-                            child: verifyButton()),
+                      Text(
+                        getTranslated(context, 'k_verify_resend_code'),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: getColors(themeNotifier.isDark, 'buttonColor'),
+                          decoration: TextDecoration.underline,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: FractionalOffset.bottomCenter,
+                      child: Material(
+                        color: getColors(themeNotifier.isDark, 'buttonColor'),
+                        borderRadius: BorderRadius.circular(10),
+                        child: InkWell(
+                          onTap: () =>
+                          _formKey.currentState!.validate()
+                              ? {
+                            setState(() {
+                              isSignIn = 'loading';
+                            }),
+                            moveToHome(context)
+                          }
+                              : null,
+                          child: AnimatedContainer(
+                              duration: const Duration(seconds: 1),
+                              width: 400,
+                              height: 60,
+                              alignment: Alignment.center,
+                              child: verifyButton(themeNotifier)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

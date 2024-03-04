@@ -16,7 +16,7 @@ class LightColors {
   static const Color production = Color(0xFF1AB58D);
   static const Color textColorblack = Color(0xFF000000);
   static const Color textColorwhite = Color(0xFFFFFFFF);
-  static const Color dropdownColor = Color(0xFFdcedc2);
+  static const Color dropdownColor = Color(0xFFFFFFFF);
 
 
   // Map color names to color values

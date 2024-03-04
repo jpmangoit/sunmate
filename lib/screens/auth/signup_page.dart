@@ -74,7 +74,7 @@ class SignupPageState extends State<SignupPage> {
     }
   }
 
-  _showMyDialog(themeNotifier) async {
+  Future<void> _showMyDialog(themeNotifier) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -502,7 +502,7 @@ class SignupPageState extends State<SignupPage> {
                                   tapTargetSize: MaterialTapTargetSize
                                       .shrinkWrap,
                                   alignment: Alignment.centerLeft),
-                              onPressed: _showMyDialog(themeNotifier),
+                              onPressed:() => _showMyDialog(themeNotifier),
                               child: Container(
                                 padding: EdgeInsets.zero,
                                 margin: EdgeInsets.zero,

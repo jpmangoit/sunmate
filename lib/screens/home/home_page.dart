@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                       ? themeNotifier.isDark = false
                       : themeNotifier.isDark = true;
                 }),
-            Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
+            const Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
           ],
         ),
         backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
