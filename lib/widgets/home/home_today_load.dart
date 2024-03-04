@@ -14,15 +14,30 @@ class TodayLoadPage extends StatefulWidget {
 }
 
 class _TodayLoadPageState extends State<TodayLoadPage> {
+  var lightIcons = [
+    'assets/images/light-icon1.png',
+    'assets/images/light-icon2.png',
+    'assets/images/light-icon3.png',
+    'assets/images/light-icon4.png',
+  ];
+  var darkIcons = [
+    'assets/images/dark-icon1.png',
+    'assets/images/dark-icon2.png',
+    'assets/images/dark-icon3.png',
+    'assets/images/dark-icon4.png',
+  ];
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
       return Center(
         child: GridView.builder(
           shrinkWrap: true,
-          itemCount: 4,
-          itemBuilder: (ctx, i) {
+          itemCount:
+              themeNotifier.isDark ? darkIcons.length : lightIcons.length,
+          itemBuilder: (ctx, index) {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -36,18 +51,23 @@ class _TodayLoadPageState extends State<TodayLoadPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        decoration: BoxDecoration(
-                          color: getColors(themeNotifier.isDark, 'buttonColor'),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Icon(
-                          Icons.home_outlined,
-                          size: 25,
-                          color:
-                              getColors(themeNotifier.isDark, 'textColorwhite'),
-                        ),
-                      ),
+                          decoration: BoxDecoration(
+                            color:
+                                getColors(themeNotifier.isDark, 'buttonColor'),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: themeNotifier.isDark
+                              ? Image.asset(
+                                  darkIcons[index],
+                                  height: 30,
+                                  width: 30,
+                                )
+                              : Image.asset(
+                                  lightIcons[index],
+                                  height: 30,
+                                  width: 30,
+                                )),
                       const SizedBox(
                         height: 15,
                       ),
