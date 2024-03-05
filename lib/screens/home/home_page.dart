@@ -309,9 +309,6 @@ class _HomePageState extends State<HomePage> {
                   height: 10,
                 ),
                 TodayStaticsticsPage(dataStatistics: DataStaticstics),
-                const SizedBox(
-                  height: 20,
-                ),
               ],
             ),
           ),

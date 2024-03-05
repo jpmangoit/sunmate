@@ -6,6 +6,7 @@ class LightColors {
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color textColor = Color(0xFF2B2B2B);
   static const Color borderColor = Color(0xFFE1E1E1);
+  static const Color cardborderColor = Color(0xFFE1E1E1);
   static const Color buttonColor = Color(0xFF4565E7);
   static const Color buttonTextColor = Color(0xFFFFFFFF);
   static const Color inputColor = Color(0xFFFFFFFF);
@@ -24,6 +25,7 @@ class LightColors {
     'backgroundColor': backgroundColor,
     'borderColor': borderColor,
     'buttonColor': buttonColor,
+    'cardborderColor': cardborderColor,
     'textColor': textColor,
     'buttonTextColor': buttonTextColor,
     'inputColor': inputColor,
@@ -44,7 +46,8 @@ class DarkColors {
   static const Color GreyTextColor = Color(0xFF6b6b6b);
   static const Color backgroundColor = Color(0xFF000000);
   static const Color textColor = Color(0xFFFFFFFF);
-  static const Color borderColor = Color(0xFFFFFFFF);
+  static const Color borderColor = Color(0xFF232020);
+  static const Color cardborderColor = Color(0xFFFFFFFF);
   static const Color buttonColor = Color(0xFFdcedc2);
   static const Color buttonTextColor = Color(0xFF171717);
   static const Color inputColor = Color(0xFF232020);
@@ -63,6 +66,7 @@ class DarkColors {
     'GreyTextColor': GreyTextColor,
     'backgroundColor': backgroundColor,
     'borderColor': borderColor,
+    'cardborderColor': cardborderColor,
     'buttonColor': buttonColor,
     'textColor': textColor,
     'buttonTextColor': buttonTextColor,

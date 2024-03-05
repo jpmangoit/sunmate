@@ -47,7 +47,7 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
       return Drawer(
-        backgroundColor: getColors(themeNotifier.isDark, 'GreyTextColor'),
+        backgroundColor: getColors(themeNotifier.isDark, 'inputColor'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -67,7 +67,8 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
                   const Spacer(),
                   TextButton(
                     onPressed: () async {
-                      Provider.of<AuthProvider>(context, listen: false).logOut();
+                      Provider.of<AuthProvider>(context, listen: false)
+                          .logOut();
                       Navigator.of(context).pushReplacementNamed('/');
                     },
                     child: Icon(Icons.logout,
@@ -76,18 +77,25 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
                 ],
               ),
             ),
-            Switch(
-              value: isSwitched ?? false,
-              onChanged: _toggleSwitch,
-              activeTrackColor: Colors.grey,
-              activeColor: Colors.grey.shade700,
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the UI based on the item selected
-                // Navigator.pop(context);
-              },
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Enable Biomimetic Password", style: TextStyle(
+                    color: getColors(themeNotifier.isDark, 'textColor'),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14
+                  ),),
+                  Switch(
+                    value: isSwitched ?? false,
+                    onChanged: _toggleSwitch,
+                    activeTrackColor: Colors.grey,
+                    activeColor: Colors.grey.shade700,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

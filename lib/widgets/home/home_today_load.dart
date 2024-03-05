@@ -32,6 +32,7 @@ class _TodayLoadPageState extends State<TodayLoadPage> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Center(
         child: GridView.builder(
+          physics: ScrollPhysics(),
           shrinkWrap: true,
           itemCount:
               themeNotifier.isDark ? darkIcons.length : lightIcons.length,
@@ -39,7 +40,7 @@ class _TodayLoadPageState extends State<TodayLoadPage> {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: getColors(themeNotifier.isDark, 'borderColor')),
+                border: Border.all(color: getColors(themeNotifier.isDark, 'cardborderColor')),
               ),
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.all(25),

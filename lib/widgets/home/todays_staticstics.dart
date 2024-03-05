@@ -18,14 +18,15 @@ class _TodayStaticsticsPageState extends State<TodayStaticsticsPage> {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
       return SizedBox(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height * 0.95,
         child: ListView(
+          physics: ScrollPhysics(),
           children: widget.dataStatistics.entries.map((entry) {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                    color: getColors(themeNotifier.isDark, 'borderColor')),
+                    color: getColors(themeNotifier.isDark, 'cardborderColor')),
               ),
               margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
               padding: const EdgeInsets.all(13),
