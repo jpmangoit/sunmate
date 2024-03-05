@@ -219,10 +219,11 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Current Power Price',
                           style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              color: getColors(themeNotifier.isDark, 'borderColor'),
-                              ),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color:
+                                getColors(themeNotifier.isDark, 'borderColor'),
+                          ),
                         ),
                       ]),
                 ),
@@ -314,7 +315,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         bottomNavigationBar: const SizedBox(
-          height: 55, // Adjust the height according to your design
+          height: 65, // Adjust the height according to your design
           child: BottomNavBarPage(),
         ),
       );
