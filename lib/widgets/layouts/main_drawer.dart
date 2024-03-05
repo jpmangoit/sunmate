@@ -16,12 +16,28 @@ class MainDrawerPage extends StatefulWidget {
 }
 
 class _MainDrawerPageState extends State<MainDrawerPage> {
-  bool isSwitched = false;
+  bool? isSwitched;
+
+  @override
+  void initState() {
+    storage();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void storage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isSwitched = prefs.getBool('isLogin') ?? false;
+    });
+    print('storage');
+  }
+
   var set;
   void _toggleSwitch(bool value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     isSwitched = value;
-    await prefs.setBool('isLogin', isSwitched);
+    await prefs.setBool('isLogin', isSwitched!);
     set = prefs.getBool('isLogin');
     print('value$isSwitched');
     print('local$set');
@@ -66,7 +82,7 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
               ),
             ),
             Switch(
-              value: isSwitched,
+              value: isSwitched ?? false,
               onChanged: _toggleSwitch,
               activeTrackColor: Colors.grey,
               activeColor: Colors.grey.shade700,
