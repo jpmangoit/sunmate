@@ -18,9 +18,7 @@ class _HomeCTPVPageState extends State<HomeCTPVPage> {
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-        builder: (context, ModelTheme themeNotifier, child) {
       return SizedBox(
-        width: MediaQuery.of(context).size.width * 0.29,
         width: MediaQuery.of(context).size.width * 0.29,
         child: Container(
           decoration: BoxDecoration(
