@@ -9,7 +9,7 @@ class LightColors {
   static const Color buttonColor = Color(0xFF4565E7);
   static const Color buttonTextColor = Color(0xFFFFFFFF);
   static const Color inputColor = Color(0xFFFFFFFF);
-  static const Color errorColor = Color(0xFFB00020);
+  static const Color errorColor = Color(0xFFB3261E);
   static const Color gridLoad = Color(0xFFFD7448);
   static const Color battaryLoad = Color(0xFF4565e7);
   static const Color houseLoad = Color(0xFFFFB800);
@@ -49,7 +49,7 @@ class DarkColors {
   static const Color buttonColor = Color(0xFFdcedc2);
   static const Color buttonTextColor = Color(0xFF171717);
   static const Color inputColor = Color(0xFF232020);
-  static const Color errorColor = Color(0xFFB00020);
+  static const Color errorColor = Color(0xFFB3261E);
   static const Color gridLoad = Color(0xFFFD7448);
   static const Color battaryLoad = Color(0xFFDCEDC2);
   static const Color houseLoad = Color(0xFFFFB800);

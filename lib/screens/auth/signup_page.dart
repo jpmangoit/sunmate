@@ -27,8 +27,7 @@ class SignupPageState extends State<SignupPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController zipCodeController = TextEditingController();
 
-
-  dynamic error;
+  dynamic error = {};
   String selectedLanguage = "";
   bool isChecked = false;
 
@@ -63,7 +62,8 @@ class SignupPageState extends State<SignupPage> {
       if (result != 201) {
         setState(() {
           isSignIn = 'initial';
-          error = result['error']['email'][0];
+          error = result['error'];
+          print(error);
         });
         return;
       }
@@ -230,8 +230,9 @@ class SignupPageState extends State<SignupPage> {
                         height: 5.0,
                       ),
                       MyTextField(
-                        controller:nameController,
-                        hintText: getTranslated(context, 'k_form_full_name_placeholder'),
+                        controller: nameController,
+                        hintText: getTranslated(
+                            context, 'k_form_full_name_placeholder'),
                         obscureText: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -242,7 +243,20 @@ class SignupPageState extends State<SignupPage> {
                         },
                       ),
                       const SizedBox(
-                        height: 15.0,
+                        height: 5.0,
+                      ),
+                      if (error.isNotEmpty && error.containsKey('name'))
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          child: Text(
+                            error['name'][0],
+                            style: TextStyle(
+                              color: getColors(
+                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 10.0,
                       ),
                       Text(
                         getTranslated(context, 'k_form_email'),
@@ -256,22 +270,33 @@ class SignupPageState extends State<SignupPage> {
                         height: 5.0,
                       ),
                       MyTextField(
-                        controller:emailController,
-                        hintText: getTranslated(context, 'k_form_email_placeholder'),
+                        controller: emailController,
+                        hintText:
+                            getTranslated(context, 'k_form_email_placeholder'),
                         obscureText: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return getTranslated(
                                 context, 'k_form_require_email');
                           }
-                          if (error.isNotEmpty && error.containsKey('name')) {
-                            return error['name'][0]; // Display error from API
-                          }
                           return null;
                         },
                       ),
                       const SizedBox(
-                        height: 15.0,
+                        height: 5.0,
+                      ),
+                      if (error.isNotEmpty && error.containsKey('email'))
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          child: Text(
+                            error['email'][0],
+                            style: TextStyle(
+                              color: getColors(
+                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 10.0,
                       ),
                       Text(
                         getTranslated(context, 'k_form_zipcode'),
@@ -285,8 +310,9 @@ class SignupPageState extends State<SignupPage> {
                         height: 5.0,
                       ),
                       MyTextField(
-                        controller:zipCodeController,
-                        hintText: getTranslated(context, 'k_form_zipcode_placeholder'),
+                        controller: zipCodeController,
+                        hintText: getTranslated(
+                            context, 'k_form_zipcode_placeholder'),
                         obscureText: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -297,7 +323,20 @@ class SignupPageState extends State<SignupPage> {
                         },
                       ),
                       const SizedBox(
-                        height: 15.0,
+                        height: 5.0,
+                      ),
+                      if (error.isNotEmpty && error.containsKey('zipcode'))
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          child: Text(
+                            error['zipcode'][0],
+                            style: TextStyle(
+                              color: getColors(
+                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 10.0,
                       ),
                       Text(
                         getTranslated(context, 'k_form_password'),
@@ -311,8 +350,9 @@ class SignupPageState extends State<SignupPage> {
                         height: 5.0,
                       ),
                       MyTextField(
-                        controller:passwordController,
-                        hintText: getTranslated(context, 'k_form_require_password'),
+                        controller: passwordController,
+                        hintText:
+                            getTranslated(context, 'k_form_require_password'),
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -323,7 +363,20 @@ class SignupPageState extends State<SignupPage> {
                         },
                       ),
                       const SizedBox(
-                        height: 20.0,
+                        height: 5.0,
+                      ),
+                      if (error.isNotEmpty && error.containsKey('password'))
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          child: Text(
+                            error['password'][0],
+                            style: TextStyle(
+                              color: getColors(
+                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 10.0,
                       ),
                       Text(
                         getTranslated(context, 'k_form_language'),
