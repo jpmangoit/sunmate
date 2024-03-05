@@ -94,8 +94,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/environment.dart';
 import '../models/login_model.dart';
+import '../models/register.dart';
 
-class LoginProvider extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   bool isLogin = false;
   bool logged = false;
   var error;
@@ -154,6 +155,28 @@ class LoginProvider extends ChangeNotifier {
         error = e.toString();
       }
       return accessToken;
+    }
+  }
+  Future registerUser(UserRegistration user) async {
+    print(user.toJson());
+    String url = '${Environment().config.apiHost}api/register';
+    final response = await http.post(
+      Uri.parse(url),
+      body: {
+        "name": user.name,
+        "email": user.email,
+        "password": user.password,
+        "terms": user.terms.toString(),
+        "lang": user.lang,
+        "zipcode": user.zipcode
+      },
+    );
+    var responseData = json.decode(response.body);
+print(responseData);
+    if (response.statusCode == 201) {
+      return response.statusCode;
+    } else {
+      return responseData;
     }
   }
 }

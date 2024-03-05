@@ -41,9 +41,9 @@ class LoginPageState extends State<LoginPage> {
       dynamic result;
       loginModal = LoginModel(
           username: email, password: password, remember: "", isMobile: false);
-      Provider.of<LoginProvider>(context, listen: false)
+      Provider.of<AuthProvider>(context, listen: false)
           .updateLoginModel(loginModal!);
-      token = await Provider.of<LoginProvider>(context, listen: false).login();
+      token = await Provider.of<AuthProvider>(context, listen: false).login();
       print(token);
       if (token == null) {
         // _authenticateUser(context);

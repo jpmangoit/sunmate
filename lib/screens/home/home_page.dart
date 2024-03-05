@@ -124,12 +124,13 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          border: Border.all(
-                              color: getColors(
-                                  themeNotifier.isDark, 'textColorblack')),
+                        borderRadius: BorderRadius.circular(7),
+                        border: Border.all(
                           color:
-                              getColors(themeNotifier.isDark, 'dropdownColor')),
+                              getColors(themeNotifier.isDark, 'textColorblack'),
+                        ),
+                        color: getColors(themeNotifier.isDark, 'dropdownColor'),
+                      ),
                       child: DropdownButton(
                         // isExpanded: true,
                         dropdownColor:
@@ -217,9 +218,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                             fontWeight: FontWeight.w300,
                             fontSize: 14,
-                            color: getColors(
-                                themeNotifier.isDark, 'iconColor'),
-
+                            color: getColors(themeNotifier.isDark, 'iconColor'),
                           ),
                         ),
                       ]),

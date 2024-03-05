@@ -14,22 +14,18 @@ class HomeCTPVPage extends StatefulWidget {
 }
 
 class _HomeCTPVPageState extends State<HomeCTPVPage> {
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
-        builder: (context, ModelTheme themeNotifier, child)
-    {
+        builder: (context, ModelTheme themeNotifier, child) {
       return SizedBox(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.29,
+        width: MediaQuery.of(context).size.width * 0.29,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: AppColors.borderColor),
           ),
+          
           margin: const EdgeInsets.all(5),
           padding: const EdgeInsets.all(10),
           child: Stack(
@@ -42,9 +38,10 @@ class _HomeCTPVPageState extends State<HomeCTPVPage> {
                     Text(
                       widget.heading,
                       style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: getColors(themeNotifier.isDark, 'textColor')),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: getColors(themeNotifier.isDark, 'textColor'),
+                      ),
                     ),
                     const SizedBox(
                       height: 10,

@@ -8,8 +8,9 @@ abstract class BaseConfig {
 
 class DevConfig implements BaseConfig {
   @override
-  String get apiHost => "http://103.127.29.85:5001";
+  // String get apiHost => "http://103.127.29.85:5001";
   // String get apiHost => "http://103.127.29.85:8006/";
+  String get apiHost => "https://sunmate.mangoitsol.com/public/";
 
   @override
   String get adminMail => "Neeraj Goswami <neeraj.goswami@mangoitsolutions.in>";

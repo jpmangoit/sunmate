@@ -1,39 +1,39 @@
 class UserRegistration {
-  final String fullName;
+  final String name;
   final String email;
-  final String zipcode;
   final String password;
-  final String selectedLanguage;
-  final bool checkTermConditions;
+  final int terms;
+  final String lang;
+  final String zipcode;
 
   UserRegistration({
-    required this.fullName,
+    required this.name,
     required this.email,
-    required this.zipcode,
     required this.password,
-    required this.selectedLanguage,
-    required this.checkTermConditions,
+    required this.terms,
+    required this.lang,
+    required this.zipcode,
   });
 
   factory UserRegistration.fromJson(Map<String, dynamic> json) {
     return UserRegistration(
-      fullName: json['fullName'],
+      name: json['name'],
       email: json['email'],
-      zipcode: json['zipcode'],
       password: json['password'],
-      selectedLanguage: json['selectedLanguage'],
-      checkTermConditions: json['checkTermConditions'],
+      terms: json['terms'],
+      lang: json['lang'],
+      zipcode: json['zipcode'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'fullName': fullName,
+      'name': name,
       'email': email,
-      'zipcode': zipcode,
       'password': password,
-      'selectedLanguage': selectedLanguage,
-      'checkTermConditions': checkTermConditions,
+      'terms': terms,
+      'lang': lang,
+      'zipcode': zipcode,
     };
   }
 }

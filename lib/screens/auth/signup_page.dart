@@ -8,7 +8,9 @@ import 'package:sunmate/constants/constants.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../localization/localization_contants.dart';
+import '../../models/register.dart';
 import '../../providers/theme_provider.dart';
+import '../../widgets/auth/text_form_field.dart';
 import '../../widgets/shared/language_select.dart';
 
 class SignupPage extends StatefulWidget {
@@ -19,14 +21,25 @@ class SignupPage extends StatefulWidget {
 }
 
 class SignupPageState extends State<SignupPage> {
-  String email = "";
-  String password = '';
-  String error = "";
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController zipCodeController = TextEditingController();
+
+
+  dynamic error;
+  String selectedLanguage = "";
+  bool isChecked = false;
+
   bool changeButton = false;
   String isSignIn = 'initial';
   final _priceFocusNode = FocusNode();
-  final _formKey = GlobalKey<FormState>();
-  bool isChecked = false;
+
+  final Map<String, String> languageCountryMap = {
+    'da': 'Danish',
+    'en': 'English',
+  };
 
   @override
   void dispose() {
@@ -36,36 +49,59 @@ class SignupPageState extends State<SignupPage> {
 
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      // dynamic result;
-      // result = await Auth().signInWithEmail(email, password);
-      // if (result != 200) {
-      //   setState(() {
-      //     isSignIn = 'initial';
-      //     error = '';
-      //   });
-      //   return;
-      // }
-      // if (!mounted) return;
-      // setState(() {
-      //   isSignIn = 'completed';
-      //   changeButton = true;
-      // });
-      await Navigator.pushReplacementNamed(context, '/home');
+      UserRegistration user = UserRegistration(
+        name: nameController.text.toString(),
+        email: emailController.text.toString(),
+        password: passwordController.text.toString(),
+        terms: isChecked ? 1 : 0,
+        lang: selectedLanguage,
+        zipcode: zipCodeController.text.toString(),
+      );
+
+      dynamic result;
+      result = await AuthProvider().registerUser(user);
+      if (result != 201) {
+        setState(() {
+          isSignIn = 'initial';
+          error = result['error']['email'][0];
+        });
+        return;
+      }
+      if (!mounted) return;
+      setState(() {
+        isSignIn = 'completed';
+        changeButton = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            dismissDirection: DismissDirection.up,
+            margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height - 100,
+                left: 10,
+                right: 10),
+            content: Text(getTranslated(context, 'k_form_register_success')),
+            backgroundColor: Color(0xFF1AB58D),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      });
+      await Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
   Widget signupButton(themeNotifier) {
     if (isSignIn == 'initial') {
       return Text(
-        getTranslated(context, 'k_form_sign_up'),
+        getTranslated(context, 'k_form_create_account'),
         style: TextStyle(
           color: getColors(themeNotifier.isDark, 'buttonTextColor'),
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
         ),
       );
     } else if (isSignIn == 'loading') {
-      return const CircularProgressIndicator().centered();
+      return CircularProgressIndicator(
+        color: getColors(themeNotifier.isDark, 'buttonTextColor'),
+      ).centered();
     } else {
       return Icon(
         Icons.done,
@@ -193,10 +229,10 @@ class SignupPageState extends State<SignupPage> {
                       const SizedBox(
                         height: 5.0,
                       ),
-                      TextFormField(
-                        style: TextStyle(
-                            color: getColors(themeNotifier.isDark, 'textColor'),
-                            fontSize: 14),
+                      MyTextField(
+                        controller:nameController,
+                        hintText: getTranslated(context, 'k_form_full_name_placeholder'),
+                        obscureText: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return getTranslated(
@@ -204,42 +240,6 @@ class SignupPageState extends State<SignupPage> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor:
-                              getColors(themeNotifier.isDark, 'inputColor'),
-                          contentPadding: const EdgeInsets.all(20),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'borderColor'),
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'buttonColor'),
-                              width: 2.0,
-                            ),
-                          ),
-                          hintText: getTranslated(
-                              context, 'k_form_full_name_placeholder'),
-                          hintStyle: TextStyle(
-                              color:
-                                  getColors(themeNotifier.isDark, 'textColor'),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
                       ),
                       const SizedBox(
                         height: 15.0,
@@ -255,56 +255,19 @@ class SignupPageState extends State<SignupPage> {
                       const SizedBox(
                         height: 5.0,
                       ),
-                      TextFormField(
-                        style: TextStyle(
-                            color: getColors(themeNotifier.isDark, 'textColor'),
-                            fontSize: 14),
+                      MyTextField(
+                        controller:emailController,
+                        hintText: getTranslated(context, 'k_form_email_placeholder'),
+                        obscureText: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return getTranslated(
                                 context, 'k_form_require_email');
                           }
+                          if (error.isNotEmpty && error.containsKey('name')) {
+                            return error['name'][0]; // Display error from API
+                          }
                           return null;
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor:
-                              getColors(themeNotifier.isDark, 'inputColor'),
-                          contentPadding: const EdgeInsets.all(20),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'borderColor'),
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'buttonColor'),
-                              width: 2.0,
-                            ),
-                          ),
-                          hintText: getTranslated(
-                              context, 'k_form_email_placeholder'),
-                          hintStyle: TextStyle(
-                              color:
-                                  getColors(themeNotifier.isDark, 'textColor'),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        onChanged: (value) {
-                          email = value;
-                          setState(() {});
                         },
                       ),
                       const SizedBox(
@@ -321,10 +284,10 @@ class SignupPageState extends State<SignupPage> {
                       const SizedBox(
                         height: 5.0,
                       ),
-                      TextFormField(
-                        style: TextStyle(
-                            color: getColors(themeNotifier.isDark, 'textColor'),
-                            fontSize: 14),
+                      MyTextField(
+                        controller:zipCodeController,
+                        hintText: getTranslated(context, 'k_form_zipcode_placeholder'),
+                        obscureText: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return getTranslated(
@@ -332,42 +295,6 @@ class SignupPageState extends State<SignupPage> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor:
-                              getColors(themeNotifier.isDark, 'inputColor'),
-                          contentPadding: const EdgeInsets.all(20),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'borderColor'),
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'buttonColor'),
-                              width: 2.0,
-                            ),
-                          ),
-                          hintText: getTranslated(
-                              context, 'k_form_zipcode_placeholder'),
-                          hintStyle: TextStyle(
-                              color:
-                                  getColors(themeNotifier.isDark, 'textColor'),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
                       ),
                       const SizedBox(
                         height: 15.0,
@@ -383,64 +310,16 @@ class SignupPageState extends State<SignupPage> {
                       const SizedBox(
                         height: 5.0,
                       ),
-                      TextFormField(
-                        style: TextStyle(
-                            color: getColors(themeNotifier.isDark, 'textColor'),
-                            fontSize: 14),
+                      MyTextField(
+                        controller:passwordController,
+                        hintText: getTranslated(context, 'k_form_require_password'),
+                        obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return getTranslated(
-                                context, 'k_form_require_password');
+                                context, 'k_form_password_placeholder');
                           }
                           return null;
-                        },
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor:
-                              getColors(themeNotifier.isDark, 'inputColor'),
-                          contentPadding: const EdgeInsets.all(20),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'borderColor'),
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: getColors(
-                                  themeNotifier.isDark, 'buttonColor'),
-                              width: 2.0,
-                            ),
-                          ),
-                          hintText: getTranslated(
-                              context, 'k_form_password_placeholder'),
-                          hintStyle: TextStyle(
-                              color:
-                                  getColors(themeNotifier.isDark, 'textColor'),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        onChanged: (value) {
-                          password = value;
-                          setState(() {});
-                        },
-                        focusNode: _priceFocusNode,
-                        onFieldSubmitted: (_) => {
-                          setState(() {
-                            isSignIn = 'loading';
-                          }),
-                          // moveToHome(context)
                         },
                       ),
                       const SizedBox(
@@ -461,8 +340,9 @@ class SignupPageState extends State<SignupPage> {
                         dropdownColor:
                             getColors(themeNotifier.isDark, 'inputColor'),
                         style: TextStyle(
-                            color: getColors(themeNotifier.isDark, 'textColor'),
-                            fontSize: 14),
+                          color: getColors(themeNotifier.isDark, 'textColor'),
+                          fontSize: 14,
+                        ),
                         decoration: InputDecoration(
                           filled: true,
                           fillColor:
@@ -472,7 +352,7 @@ class SignupPageState extends State<SignupPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(10),
                             ),
                             borderSide: BorderSide(
@@ -491,26 +371,33 @@ class SignupPageState extends State<SignupPage> {
                           ),
                           hintText: getTranslated(context, 'k_form_language'),
                           hintStyle: TextStyle(
-                              color:
-                                  getColors(themeNotifier.isDark, 'textColor'),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                            color: getColors(themeNotifier.isDark, 'textColor'),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return getTranslated(
+                                context, 'k_form_select_language_required');
+                          }
+                          return null;
+                        },
                         onChanged: (value) {
                           setState(() {
-                            // selectedLanguage = value!;
+                            selectedLanguage = value!;
                           });
                         },
-                        items:
-                            <String>['Danish', 'English'].map((String value) {
+                        items: languageCountryMap.entries
+                            .map((MapEntry<String, String> entry) {
                           return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
+                            value: entry.key,
+                            child: Text(entry.value),
                           );
                         }).toList(),
                       ),
                       const SizedBox(
-                        height: 10.0,
+                        height: 10,
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment
@@ -519,7 +406,6 @@ class SignupPageState extends State<SignupPage> {
                           Checkbox(
                             value: isChecked,
                             onChanged: (bool? value) {
-                              // This is where we update the state when the checkbox is tapped
                               setState(() {
                                 isChecked = value!;
                               });
@@ -621,17 +507,30 @@ class SignupPageState extends State<SignupPage> {
                         child: InkWell(
                           onTap: () => _formKey.currentState!.validate()
                               ? {
-                                  setState(() {
-                                    isSignIn = 'loading';
-                                  }),
-                                  moveToHome(context)
+                                  if (isChecked == false)
+                                    {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(getTranslated(context,
+                                            'k_form_terms_checkbox_required')),
+                                        backgroundColor: Color(0xFFB00020),
+                                      ))
+                                    }
+                                  else
+                                    {
+                                      setState(() {
+                                        isSignIn = 'loading';
+                                      }),
+                                      moveToHome(context)
+                                    },
                                 }
                               : null,
                           child: AnimatedContainer(
                               duration: const Duration(seconds: 1),
                               width: 400,
-                              height: 50,
+                              height: 60,
                               alignment: Alignment.center,
+                              padding: EdgeInsets.all(10),
                               child: signupButton(themeNotifier)),
                         ),
                       ),
@@ -653,7 +552,6 @@ class SignupPageState extends State<SignupPage> {
                               minimumSize: Size(50, 30),
                             ),
                             onPressed: () {
-                              _formKey.currentState?.reset();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
