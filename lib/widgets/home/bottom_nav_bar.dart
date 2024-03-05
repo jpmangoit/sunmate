@@ -16,51 +16,63 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-          return SizedBox(
-            height: 70, // Adjust the height according to your design
-            child: Container(
-              decoration: BoxDecoration(
-                color: getColors(themeNotifier.isDark, 'backgroundColor'),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 1), //(x,y)
-                    blurRadius: 5.0,
-                  ),
-                ],
+      return SizedBox(
+        height: 70, // Adjust the height according to your design
+        child: Container(
+          decoration: BoxDecoration(
+            color: getColors(themeNotifier.isDark, 'backgroundColor'),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 1), //(x,y)
+                blurRadius: 5.0,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.home_outlined),
-                    color: getColors(themeNotifier.isDark, 'textColor'),
-                    onPressed: () {
-                      // Handle home icon press
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.electric_meter_outlined),
-                    onPressed: () {
-                      // Handle power icon press
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.library_books_outlined),
-                    onPressed: () {
-                      // Handle list icon press
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.account_circle_outlined),
-                    onPressed: () {
-                      // Handle profile icon press
-                    },
-                  ),
-                ],
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                  onTap: () {},
+                  child: themeNotifier.isDark
+                      ? Image.asset(
+                          'assets/images/dark-bar1.png',
+                          height: 25,
+                          width: 26,
+                        )
+                      : Image.asset(
+                          'assets/images/light-bar1.png',
+                          height: 25,
+                          width: 26,
+                        )),
+              GestureDetector(
+                onTap: () {},
+                child: Image.asset(
+                  'assets/images/bottom-bar2.png',
+                  height: 25,
+                  width: 26,
+                ),
               ),
-            ),
-          );
-        });
+              GestureDetector(
+                onTap: () {},
+                child: Image.asset(
+                  'assets/images/bottom-bar3.png',
+                  height: 25,
+                  width: 26,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Image.asset(
+                  'assets/images/bottom-bar4.png',
+                  height: 25,
+                  width: 26,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }
