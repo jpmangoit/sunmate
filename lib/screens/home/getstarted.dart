@@ -25,58 +25,68 @@ class _FirstHomePageState extends State<FirstHomePage> {
         body: Padding(
           padding:
               const EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 25,
-              ),
-              Center(
+          child: Container(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Center(
+                    child: Container(
+                  margin: const EdgeInsets.all(20),
                   child: Image.asset(
-                'assets/images/${getLogo(themeNotifier.isDark)}',
-                // height: height * 0.12,
-              )),
-              SizedBox(
-                height: 25,
-              ),
-              Center(child: Image.asset('assets/images/home1.png')),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                'Energy optimization',
-                style: TextStyle(fontSize: 30, color: Colors.white),
-              ),
-              Text(
-                'Sign in to your energy automation app check ',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16,
+                    'assets/images/${getLogo(themeNotifier.isDark)}',
+                    // height: height * 0.12,
+                  ),
+                )),
+                SizedBox(
+                  height: 25,
                 ),
-              ),
-              Text(
-                'Sign in to your energy automation app ',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16,
+                Center(child: Image.asset('assets/images/home1.png')),
+                SizedBox(
+                  height: 25,
                 ),
-              ),
-              Text(
-                'energy automation app ',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16,
+                Text(
+                  'Energy optimization',
+                  style: TextStyle(fontSize: 30, color: Colors.white),
                 ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              MyButton(
-                text: 'Get started',
-                onTap: () {
-                  Navigator.pushNamed(context, '/home');
-                },
-              ),
-            ],
+                Text(
+                  'Sign in to your energy automation app check ',
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  'Sign in to your energy automation app ',
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  'energy automation app ',
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: MyButton(
+                      text: 'Get started',
+                      onTap: () {
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

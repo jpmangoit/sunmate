@@ -17,6 +17,7 @@ class MyButton extends StatelessWidget {
           onTap: onTap,
           child: Container(
             width: MediaQuery.of(context).size.width,
+            height: 60,
             padding: const EdgeInsets.all(15),
             // margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
