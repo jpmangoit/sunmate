@@ -75,6 +75,7 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
 
   Widget _textFieldOTP({bool? first, last, themeNotifier}) {
     return Container(
+      // color: getColors(themeNotifier.isDark, 'inputColor'),
       height: 65,
       child: AspectRatio(
         aspectRatio: 1.0,
@@ -98,6 +99,8 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
           keyboardType: TextInputType.number,
           maxLength: 1,
           decoration: InputDecoration(
+            filled: true,
+            fillColor: getColors(themeNotifier.isDark, 'inputColor'),
             counter: Offstage(),
             contentPadding: const EdgeInsets.only(bottom: 50, top: 50),
             enabledBorder: OutlineInputBorder(
@@ -108,7 +111,8 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
                 borderRadius: BorderRadius.circular(12)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    width: 2, color: getColors(themeNotifier.isDark, 'buttonColor')),
+                    width: 2,
+                    color: getColors(themeNotifier.isDark, 'buttonColor')),
                 borderRadius: BorderRadius.circular(12)),
           ),
         ),
@@ -119,8 +123,7 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
-        builder: (context, ModelTheme themeNotifier, child)
-    {
+        builder: (context, ModelTheme themeNotifier, child) {
       return SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -133,7 +136,8 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
             title: Text(
               getTranslated(context, 'k_verify'),
               textAlign: TextAlign.center,
-              style: TextStyle(color: getColors(themeNotifier.isDark, 'textColor')),
+              style: TextStyle(
+                  color: getColors(themeNotifier.isDark, 'textColor')),
             ),
             actions: const <Widget>[
               Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
@@ -175,7 +179,8 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: getColors(themeNotifier.isDark, 'GreyTextColor')),
+                        color:
+                            getColors(themeNotifier.isDark, 'GreyTextColor')),
                   ),
                   const SizedBox(
                     height: 40.0,
@@ -183,10 +188,22 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _textFieldOTP(first: true, last: false, themeNotifier: themeNotifier),
-                      _textFieldOTP(first: false, last: false, themeNotifier: themeNotifier),
-                      _textFieldOTP(first: false, last: false, themeNotifier: themeNotifier),
-                      _textFieldOTP(first: false, last: true, themeNotifier: themeNotifier),
+                      _textFieldOTP(
+                          first: true,
+                          last: false,
+                          themeNotifier: themeNotifier),
+                      _textFieldOTP(
+                          first: false,
+                          last: false,
+                          themeNotifier: themeNotifier),
+                      _textFieldOTP(
+                          first: false,
+                          last: false,
+                          themeNotifier: themeNotifier),
+                      _textFieldOTP(
+                          first: false,
+                          last: true,
+                          themeNotifier: themeNotifier),
                     ],
                   ),
                   const SizedBox(
@@ -229,14 +246,13 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
                         color: getColors(themeNotifier.isDark, 'buttonColor'),
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
-                          onTap: () =>
-                          _formKey.currentState!.validate()
+                          onTap: () => _formKey.currentState!.validate()
                               ? {
-                            setState(() {
-                              isSignIn = 'loading';
-                            }),
-                            moveToHome(context)
-                          }
+                                  setState(() {
+                                    isSignIn = 'loading';
+                                  }),
+                                  moveToHome(context)
+                                }
                               : null,
                           child: AnimatedContainer(
                               duration: const Duration(seconds: 1),

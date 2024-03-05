@@ -18,7 +18,6 @@ class LightColors {
   static const Color textColorwhite = Color(0xFFFFFFFF);
   static const Color dropdownColor = Color(0xFFFFFFFF);
   static const Color iconColor = Color(0xFFFFFFFF);
-
   // Map color names to color values
   static Map<String, Color> colors = {
     'GreyTextColor': GreyTextColor,
@@ -35,7 +34,7 @@ class LightColors {
     'production': production,
     'textColorblack': textColorblack,
     'textColorwhite': textColorwhite,
-    'iconColor':iconColor,
+    'iconColor': iconColor,
     'dropdownColor': dropdownColor,
   };
 }
@@ -75,13 +74,14 @@ class DarkColors {
     'production': production,
     'textColorblack': textColorblack,
     'textColorwhite': textColorwhite,
-    'iconColor':iconColor,
+    'iconColor': iconColor,
     'dropdownColor': dropdownColor,
   };
 }
 
 Color getColors(bool mode, String color) {
-  return (mode ? DarkColors.colors[color] : LightColors.colors[color]) ?? Colors.transparent;
+  return (mode ? DarkColors.colors[color] : LightColors.colors[color]) ??
+      Colors.transparent;
 }
 
 String getLogo(bool mode) {

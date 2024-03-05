@@ -18,15 +18,16 @@ class _HomeCTPVPageState extends State<HomeCTPVPage> {
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
+        builder: (context, ModelTheme themeNotifier, child) {
       return SizedBox(
+        width: MediaQuery.of(context).size.width * 0.29,
         width: MediaQuery.of(context).size.width * 0.29,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppColors.borderColor),
           ),
-          
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(3),
           padding: const EdgeInsets.all(10),
           child: Stack(
             children: [

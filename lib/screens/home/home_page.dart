@@ -27,7 +27,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // Initial Selected Value
   String dropdownvalue = 'Power Slit';
-
+  var like = true;
+  var disLike = false;
   // List of items in our dropdown menu
   var items = [
     'Power Slit',
@@ -83,8 +84,9 @@ class _HomePageState extends State<HomePage> {
           title: Text(
             getTranslated(context, 'k_home_page'),
             textAlign: TextAlign.center,
-            style:
-                TextStyle(color: getColors(themeNotifier.isDark, 'textColor')),
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: getColors(themeNotifier.isDark, 'textColor')),
           ),
           actions: <Widget>[
             const Padding(padding: EdgeInsets.all(5), child: LanguageSelect()),
@@ -117,6 +119,8 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       getTranslated(context, 'k_home_load_info'),
                       style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
                           color: getColors(themeNotifier.isDark, 'textColor')),
                     ),
                     const Spacer(),
@@ -216,10 +220,11 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Current Power Price',
                           style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14,
-                            color: getColors(themeNotifier.isDark, 'iconColor'),
-                          ),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: Color.fromRGBO(255, 255, 255, 0.5)
+                              // getColors(themeNotifier.isDark, 'borderColor'),
+                              ),
                         ),
                       ]),
                 ),
@@ -227,12 +232,51 @@ class _HomePageState extends State<HomePage> {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       getTranslated(context, 'k_home_today_load'),
                       style: TextStyle(
                           color: getColors(themeNotifier.isDark, 'textColor')),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                like = !like;
+                                if (like) {
+                                  disLike = false;
+                                }
+                              });
+                            },
+                            icon: like
+                                ? Icon(
+                                    Icons.thumb_up_alt,
+                                    color: getColors(
+                                        themeNotifier.isDark, 'buttonColor'),
+                                  )
+                                : Icon(
+                                    Icons.thumb_up_alt,
+                                  )),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                disLike = !disLike;
+                                if (disLike) {
+                                  like = false;
+                                }
+                              });
+                            },
+                            icon: disLike
+                                ? Icon(
+                                    Icons.thumb_down,
+                                    color: getColors(
+                                        themeNotifier.isDark, 'buttonColor'),
+                                  )
+                                : Icon(Icons.thumb_down))
+                      ],
                     ),
                   ],
                 ),

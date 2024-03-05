@@ -29,23 +29,23 @@ class _TodayStaticsticsPageState extends State<TodayStaticsticsPage> {
                     color: getColors(themeNotifier.isDark, 'borderColor')),
               ),
               margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(13),
               child: Row(
                 children: [
                   Text(
                     entry.key,
                     style: TextStyle(
-                      color: getColors(themeNotifier.isDark, 'textColor'),
-                      fontSize: 14,
-                    ),
+                        color: getColors(themeNotifier.isDark, 'GreyTextColor'),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400),
                   ),
                   const Spacer(),
                   Text(
                     entry.value,
                     style: TextStyle(
                       color: getColors(themeNotifier.isDark, 'textColor'),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
                     ),
                   ),
                 ],
