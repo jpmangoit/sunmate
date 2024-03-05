@@ -35,7 +35,7 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       dynamic result;
-      // result = await Auth().signInWithEmail(email, password);
+      // result = await Auth().otpVerification(email, password);
       // if (result != 200) {
       //   setState(() {
       //     isSignIn = 'initial';

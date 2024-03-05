@@ -8,7 +8,6 @@ import '../screens/home/home_page.dart';
 
 var allRoutes = {
   '/login': (BuildContext context) => LoginPage(),
-  // '/Signup': (BuildContext context) => SignupPage(),
   '/verification': (BuildContext context) => CodeVerificationPage(),
   '/home': (BuildContext context) => HomePage(),
   '/firstHome': (BuildContext context) => FirstHomePage()

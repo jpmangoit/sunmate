@@ -60,7 +60,7 @@ class DarkColors {
   static const Color textColorwhite = Color(0xFFFFFFFF);
   static const Color dropdownColor = Color(0xFFdcedc2);
   static const Color iconColor = Color(0xFF000000);
-  // Map color names to color values
+
   // Map color names to color values
   static Map<String, Color> colors = {
     'GreyTextColor': GreyTextColor,
