@@ -35,6 +35,7 @@
     "k_form_language": "Select Language",
     "k_form_select_language_required": "Please select language",
     "k_form_register_success": "Thanks for signing up on Sunmate.io. Please log in to continue.",
+    "k_form_login_success": "You've successfully logged in. Welcome aboard!",
     "k_form_terms_checkbox_required": "Please agree to sunmate IO Terms & Conditions & Private Policy & Disclaimer",
     "k_form_password_placeholder": "Enter Password",
     "k_form_require_password": "Please enter password",

@@ -12,7 +12,6 @@ import 'package:sunmate/widgets/home/todays_staticstics.dart';
 import 'package:sunmate/widgets/layouts/main_drawer.dart';
 import 'package:sunmate/widgets/shared/language_select.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import '../../constants/constants.dart';
 import '../../localization/localization_contants.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';

@@ -93,7 +93,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/environment.dart';
-import '../models/login_model.dart';
+import '../models/login.dart';
 import '../models/register.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -103,11 +103,11 @@ class AuthProvider extends ChangeNotifier {
   var accessToken;
   int? expireTime;
   var refreshToken;
-  LoginModel? _loginModel;
+  UserLogin? _loginModel;
   var response;
-  LoginModel? get loginModel => _loginModel;
+  UserLogin? get loginModel => _loginModel;
 
-  void updateLoginModel(LoginModel newLoginModel) {
+  void updateLoginModel(UserLogin newLoginModel) {
     _loginModel = newLoginModel;
     notifyListeners();
   }
@@ -116,10 +116,7 @@ class AuthProvider extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (_loginModel != null) {
-      //     String url = '${Environment().config.apiHost}api/login';
-      final apiUrl = '${Environment().config.apiHost}/api/login-keycloak';
-      print(apiUrl);
-      print(_loginModel);
+      final apiUrl = '${Environment().config.apiHost}api/login';
       isLogin = true;
       notifyListeners();
       try {
@@ -128,37 +125,30 @@ class AuthProvider extends ChangeNotifier {
           body: jsonEncode(_loginModel!.toJson()),
           headers: {'Content-Type': 'application/json'},
         );
-        print(response.statusCode);
-        // print(response.body);
         Map<String, dynamic> responseData = jsonDecode(response.body);
-        print(responseData['expires_in']);
-
-        // ['refresh_token']);
         isLogin = false;
         notifyListeners();
         if (response.statusCode == 200) {
           logged = true;
-          accessToken = responseData['access_token'];
-          refreshToken = responseData['refresh_token'];
-          expireTime = responseData['expires_in'];
+          accessToken = responseData['token'];
           await prefs.setString('accessToken', accessToken);
-          await prefs.setString('refreshToken', refreshToken);
-          await prefs.setInt('expire', expireTime!);
-          print(accessToken);
-          print(refreshToken);
-          print(logged);
+
+          // refreshToken = responseData['refresh_token'];
+          // expireTime = responseData['expires_in'];
+          // await prefs.setString('refreshToken', refreshToken);
+          // await prefs.setInt('expire', expireTime!);
+          // print(accessToken);
         } else {
           error = response.statusCode.toString();
         }
       } catch (e) {
-        print(e);
         error = e.toString();
       }
       return accessToken;
     }
   }
+
   Future registerUser(UserRegistration user) async {
-    print(user.toJson());
     String url = '${Environment().config.apiHost}api/register';
     final response = await http.post(
       Uri.parse(url),
@@ -172,11 +162,15 @@ class AuthProvider extends ChangeNotifier {
       },
     );
     var responseData = json.decode(response.body);
-print(responseData);
     if (response.statusCode == 201) {
       return response.statusCode;
     } else {
       return responseData;
     }
+  }
+
+  logOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
   }
 }

@@ -7,7 +7,7 @@ import 'package:sunmate/screens/auth/signup_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constants/colors_contant.dart';
 import '../../localization/localization_contants.dart';
-import '../../models/login_model.dart';
+import '../../models/login.dart';
 import '../../providers/theme_provider.dart';
 import '../../widgets/shared/language_select.dart';
 
@@ -24,7 +24,8 @@ class LoginPageState extends State<LoginPage> {
   String error = "";
   bool changeButton = false;
   String isSignIn = 'initial';
-  LoginModel? loginModal;
+  UserLogin? loginModal;
+  var visiblePass = false;
   var token;
 
   final _priceFocusNode = FocusNode();
@@ -39,27 +40,35 @@ class LoginPageState extends State<LoginPage> {
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       dynamic result;
-      loginModal = LoginModel(
-          username: email, password: password, remember: "", isMobile: false);
+      loginModal = UserLogin(email: email, password: password);
       Provider.of<AuthProvider>(context, listen: false)
           .updateLoginModel(loginModal!);
       token = await Provider.of<AuthProvider>(context, listen: false).login();
       print(token);
       if (token == null) {
-        // _authenticateUser(context);
         setState(() {
           isSignIn = 'initial';
-          error = getTranslated(context, 'k_valid_email_pass');
+          // error = getTranslated(context, 'k_valid_email_pass');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              dismissDirection: DismissDirection.up,
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height - 100,
+                  left: 10,
+                  right: 10),
+              content: Text(getTranslated(context, 'k_valid_email_pass')),
+              backgroundColor: Color(0xFFB3261E),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
         });
         return;
       }
-
       if (!mounted) return;
       setState(() {
         isSignIn = 'completed';
         changeButton = true;
       });
-      // await Navigator.pushReplacementNamed(context, '/verification');
       await Navigator.pushReplacementNamed(context, '/verification');
     }
   }
@@ -236,8 +245,21 @@ class LoginPageState extends State<LoginPage> {
                       return null;
                     },
                     readOnly: isSignIn != 'initial',
-                    obscureText: true,
+                    obscureText: !visiblePass,
                     decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              visiblePass = !visiblePass;
+                            });
+                          },
+                          icon: visiblePass
+                              ? Icon(
+                                  Icons.remove_red_eye_sharp,
+                                  color: getColors(
+                                      themeNotifier.isDark, 'buttonColor'),
+                                )
+                              : Icon(Icons.remove_red_eye_sharp)),
                       filled: true,
                       fillColor: getColors(themeNotifier.isDark, 'inputColor'),
                       contentPadding: const EdgeInsets.all(20),

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/providers/auth_provider.dart';
 import 'package:sunmate/screens/auth/login_page.dart';
-import 'package:sunmate/constants/constants.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../localization/localization_contants.dart';
@@ -48,6 +47,18 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
       setState(() {
         isSignIn = 'completed';
         changeButton = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            dismissDirection: DismissDirection.up,
+            margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height - 100,
+                left: 10,
+                right: 10),
+            content: Text(getTranslated(context, 'k_form_login_success')),
+            backgroundColor: Color(0xFF1AB58D),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
       });
       await Navigator.pushReplacementNamed(context, '/firstHome');
     }

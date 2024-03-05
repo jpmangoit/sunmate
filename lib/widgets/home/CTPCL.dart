@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../constants/colors_contant.dart';
-import '../../constants/constants.dart';
 import '../../providers/theme_provider.dart';
 
 class CTPVLPage extends StatefulWidget {

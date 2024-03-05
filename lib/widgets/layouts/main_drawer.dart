@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sunmate/constants/colors_contant.dart';
-
-import '../../constants/constants.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 
@@ -69,10 +67,7 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
                   const Spacer(),
                   TextButton(
                     onPressed: () async {
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.remove('accessToken');
-                      // Provider.of<Auth>(context, listen: false).logOut();
+                      Provider.of<AuthProvider>(context, listen: false).logOut();
                       Navigator.of(context).pushReplacementNamed('/');
                     },
                     child: Icon(Icons.logout,

@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
-
-import '../../constants/constants.dart';
 import '../../providers/theme_provider.dart';
 
 class BottomNavBarPage extends StatefulWidget {

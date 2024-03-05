@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/widgets/home/CTPCL.dart';
-import '../../constants/constants.dart';
 import '../../providers/theme_provider.dart';
 
 class HomeCTPVPage extends StatefulWidget {
@@ -23,7 +22,7 @@ class _HomeCTPVPageState extends State<HomeCTPVPage> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.borderColor),
+            border: Border.all(color: getColors(themeNotifier.isDark, 'borderColor')),
           ),
           margin: const EdgeInsets.all(3),
           padding: const EdgeInsets.all(10),

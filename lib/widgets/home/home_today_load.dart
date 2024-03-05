@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
-
-import '../../constants/constants.dart';
 import '../../providers/theme_provider.dart';
 
 class TodayLoadPage extends StatefulWidget {
@@ -41,7 +39,7 @@ class _TodayLoadPageState extends State<TodayLoadPage> {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: AppColors.borderColor),
+                border: Border.all(color: getColors(themeNotifier.isDark, 'borderColor')),
               ),
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.all(25),
