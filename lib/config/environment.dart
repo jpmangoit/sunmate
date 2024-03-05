@@ -23,8 +23,6 @@ class Environment {
     switch (environment) {
       case Environment.PROD:
         return ProdConfig();
-      case Environment.STAGING:
-        return StagingConfig();
       default:
         return DevConfig();
     }

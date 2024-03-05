@@ -25,24 +25,6 @@ class DevConfig implements BaseConfig {
   bool get useHttps => false;
 }
 
-class StagingConfig implements BaseConfig {
-  @override
-  String get apiHost => "staging.example.com";
-
-  @override
-  bool get reportErrors => true;
-
-  @override
-  bool get trackEvents => false;
-
-  @override
-  bool get useHttps => true;
-
-  @override
-  // TODO: implement adminMail
-  String get adminMail => throw UnimplementedError();
-}
-
 class ProdConfig implements BaseConfig {
   @override
   String get apiHost => "example.com";
