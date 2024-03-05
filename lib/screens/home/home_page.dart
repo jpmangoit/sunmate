@@ -221,8 +221,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 16,
-                              color: Color.fromRGBO(255, 255, 255, 0.5)
-                              // getColors(themeNotifier.isDark, 'borderColor'),
+                              color: getColors(themeNotifier.isDark, 'borderColor'),
                               ),
                         ),
                       ]),
@@ -317,7 +316,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavBarPage(),
+        bottomNavigationBar: const SizedBox(
+          height: 55, // Adjust the height according to your design
+          child: BottomNavBarPage(),
+        ),
       );
     });
   }

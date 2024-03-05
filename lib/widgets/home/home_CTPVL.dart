@@ -21,6 +21,7 @@ class _HomeCTPVPageState extends State<HomeCTPVPage> {
         width: MediaQuery.of(context).size.width * 0.29,
         child: Container(
           decoration: BoxDecoration(
+            color:getColors(themeNotifier.isDark, 'inputColor'),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: getColors(themeNotifier.isDark, 'borderColor')),
           ),

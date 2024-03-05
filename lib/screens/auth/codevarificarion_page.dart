@@ -75,7 +75,9 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
         ),
       );
     } else if (isSignIn == 'loading') {
-      return const CircularProgressIndicator().centered();
+      return CircularProgressIndicator(
+        color: getColors(themeNotifier.isDark, 'buttonTextColor'),
+      ).centered();
     } else {
       return Icon(
         Icons.done,

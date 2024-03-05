@@ -84,7 +84,9 @@ class LoginPageState extends State<LoginPage> {
         ),
       );
     } else if (isSignIn == 'loading') {
-      return const CircularProgressIndicator().centered();
+      return CircularProgressIndicator(
+        color: getColors(themeNotifier.isDark, 'buttonTextColor'),
+      ).centered();
     } else {
       return Icon(
         Icons.done,
@@ -361,6 +363,7 @@ class LoginPageState extends State<LoginPage> {
                               width: 400,
                               height: 60,
                               alignment: Alignment.center,
+                              padding: EdgeInsets.all(10),
                               child: loginButton(themeNotifier)),
                         ),
                       ),

@@ -39,8 +39,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late Locale _locale = const Locale('en');
-  var themeCustom = true;
-
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
@@ -149,8 +147,6 @@ class _MyHomePageState extends State<MyHomePage> {
     expireTime = prefs.getInt('expire');
     isLogin = prefs.getBool('isLogin') ?? false;
 
-    print('exp$expireTime');
-    print('login$isLogin');
     if (expireTime != null) {
       DateTime expirationTime =
           DateTime.now().add(Duration(seconds: expireTime));

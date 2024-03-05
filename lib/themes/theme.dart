@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-var kColorScheme = ColorScheme.fromSeed(seedColor: Colors.red.shade200);
-
 
 ThemeData lightThemeData = ThemeData(
   useMaterial3: true,
