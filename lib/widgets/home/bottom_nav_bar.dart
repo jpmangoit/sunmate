@@ -37,36 +37,36 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
                   child: themeNotifier.isDark
                       ? Image.asset(
                           'assets/images/dark-bar1.png',
-                          height: 25,
-                          width: 26,
+                          height: 20,
+                          width: 20,
                         )
                       : Image.asset(
                           'assets/images/light-bar1.png',
-                          height: 25,
-                          width: 26,
+                          height: 20,
+                          width: 20,
                         )),
               GestureDetector(
                 onTap: () {},
                 child: Image.asset(
                   'assets/images/bottom-bar2.png',
-                  height: 25,
-                  width: 26,
+                  height: 20,
+                  width: 20,
                 ),
               ),
               GestureDetector(
                 onTap: () {},
                 child: Image.asset(
                   'assets/images/bottom-bar3.png',
-                  height: 25,
-                  width: 26,
+                  height: 20,
+                  width: 20,
                 ),
               ),
               GestureDetector(
                 onTap: () {},
                 child: Image.asset(
                   'assets/images/bottom-bar4.png',
-                  height: 25,
-                  width: 26,
+                  height: 20,
+                  width: 20,
                 ),
               ),
             ],

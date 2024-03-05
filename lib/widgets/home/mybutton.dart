@@ -19,7 +19,6 @@ class MyButton extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: 60,
             padding: const EdgeInsets.all(15),
-            // margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               color: getColors(themeNotifier.isDark, 'buttonColor'),
               borderRadius: BorderRadius.circular(8),

@@ -36,7 +36,6 @@ class _FirstHomePageState extends State<FirstHomePage> {
                   margin: const EdgeInsets.all(20),
                   child: Image.asset(
                     'assets/images/${getLogo(themeNotifier.isDark)}',
-                    // height: height * 0.12,
                   ),
                 )),
                 SizedBox(

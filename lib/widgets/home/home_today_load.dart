@@ -55,7 +55,6 @@ class _TodayLoadPageState extends State<TodayLoadPage> {
                                 getColors(themeNotifier.isDark, 'buttonColor'),
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          // padding: const EdgeInsets.all(2),
                           child: themeNotifier.isDark
                               ? Image.asset(
                                   darkIcons[index],

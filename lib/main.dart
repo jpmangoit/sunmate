@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -126,7 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // Prompt shown to the user
         options: const AuthenticationOptions(
           useErrorDialogs: true, // Show system dialog in case of error
-
           stickyAuth: true,
         ),
       );

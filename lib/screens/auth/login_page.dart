@@ -1,15 +1,12 @@
 import 'package:provider/provider.dart';
 import 'package:sunmate/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sunmate/screens/auth/codevarificarion_page.dart';
 import 'package:sunmate/screens/auth/signup_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../constants/colors_contant.dart';
 import '../../localization/localization_contants.dart';
 import '../../models/login.dart';
 import '../../providers/theme_provider.dart';
-import '../../widgets/shared/language_select.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -48,7 +45,6 @@ class LoginPageState extends State<LoginPage> {
       if (token == null) {
         setState(() {
           isSignIn = 'initial';
-          // error = getTranslated(context, 'k_valid_email_pass');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               dismissDirection: DismissDirection.up,
@@ -319,14 +315,6 @@ class LoginPageState extends State<LoginPage> {
                             alignment: Alignment.centerLeft),
                         onPressed: () {
                           _formKey.currentState?.reset();
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) {
-                          //       return
-                          //     },
-                          //   ),
-                          // );
                         },
                         child: Text(
                           getTranslated(context, 'k_login_forget_password'),

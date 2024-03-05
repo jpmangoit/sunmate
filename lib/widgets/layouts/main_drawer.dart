@@ -28,7 +28,6 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
     setState(() {
       isSwitched = prefs.getBool('isLogin') ?? false;
     });
-    print('storage');
   }
 
   var set;
@@ -37,8 +36,6 @@ class _MainDrawerPageState extends State<MainDrawerPage> {
     isSwitched = value;
     await prefs.setBool('isLogin', isSwitched!);
     set = prefs.getBool('isLogin');
-    print('value$isSwitched');
-    print('local$set');
     setState(() {});
   }
 

@@ -22,7 +22,6 @@ class _CTPVLPageState extends State<CTPVLPage> {
           borderRadius: BorderRadius.circular(25),
           border: Border.all(
               color: getColors(themeNotifier.isDark, 'buttonColor'), width: 1),
-          // color: AppColors.buttonColor,
         ),
         child: Text(
           widget.label,

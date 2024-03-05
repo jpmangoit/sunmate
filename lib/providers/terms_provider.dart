@@ -12,8 +12,6 @@ class Terms extends ChangeNotifier {
       response = await http.get(Uri.parse(apiUrl));
       var res = response.body;
       return res;
-      print(response.statusCode);
-      print(response.body);
     } catch (e) {
       print(e.toString());
     }

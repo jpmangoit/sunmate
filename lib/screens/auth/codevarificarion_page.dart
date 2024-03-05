@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
-import 'package:sunmate/providers/auth_provider.dart';
-import 'package:sunmate/screens/auth/login_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../localization/localization_contants.dart';

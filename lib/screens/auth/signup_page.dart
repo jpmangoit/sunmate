@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/providers/auth_provider.dart';
