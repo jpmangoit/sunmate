@@ -15,6 +15,8 @@
     "k_verify": "Verification",
     "k_verify_heading": "Enter ",
     "k_verify_digits_code": "4 digits code",
+    "k_verify_google_code": "Google Authenticator Code",
+
     "k_verify_sub_text": "Enter 4 digits code that you recevied on your mail.",
     "k_verify_resend": "I Don't receive any code! ",
     "k_verify_resend_code": "Resend Code",
@@ -24,6 +26,8 @@
     "k_form_create_account": "Create new account",
     "k_form_full_name": "Full Name",
     "k_form_full_name_placeholder": "Enter Full Name",
+    "k_form_code": "Enter code",
+
     "k_form_require_full_name": "Please enter full name",
     "k_form_email": "Email",
     "k_form_email_placeholder": "Enter Email",

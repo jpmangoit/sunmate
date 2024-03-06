@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sunmate/screens/auth/codevarificarion_page.dart';
+import 'package:sunmate/screens/auth/signup_page.dart';
 
 import '../screens/auth/google_verification.dart';
 import '../screens/auth/login_page.dart';
