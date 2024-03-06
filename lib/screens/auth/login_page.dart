@@ -40,9 +40,9 @@ class LoginPageState extends State<LoginPage> {
       loginModal = UserLogin(email: email, password: password);
       Provider.of<AuthProvider>(context, listen: false)
           .updateLoginModel(loginModal!);
-      token = await Provider.of<AuthProvider>(context, listen: false).login();
-      print(token);
-      if (token == null) {
+      var res = await Provider.of<AuthProvider>(context, listen: false).login();
+      print(res);
+      if (res['token'] == null) {
         setState(() {
           isSignIn = 'initial';
           ScaffoldMessenger.of(context).showSnackBar(
@@ -65,7 +65,11 @@ class LoginPageState extends State<LoginPage> {
         isSignIn = 'completed';
         changeButton = true;
       });
-      await Navigator.pushReplacementNamed(context, '/verification');
+      if (res['auth_method'] == 'google') {
+        await Navigator.pushReplacementNamed(context, '/googleVerification');
+      } else {
+        await Navigator.pushReplacementNamed(context, '/verification');
+      }
     }
   }
 

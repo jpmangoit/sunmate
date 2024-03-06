@@ -40,6 +40,7 @@
     "k_form_password_placeholder": "Enter Password",
     "k_form_require_password": "Please enter password",
     "k_valid_email_pass": "Please enter a valid email and password.",
+    "k_verify_google_code": "Google Authenticator Code",
     "k_home_page": "Home",
     "k_home_today_load": "Current Status",
     "k_home_load_info": "Load info last 15 minutes",

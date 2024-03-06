@@ -19,7 +19,8 @@ class AuthProvider extends ChangeNotifier {
   UserLogin? _loginModel;
   var response;
   UserLogin? get loginModel => _loginModel;
-
+  var token;
+  var method;
   void updateLoginModel(UserLogin newLoginModel) {
     _loginModel = newLoginModel;
     notifyListeners();
@@ -40,11 +41,19 @@ class AuthProvider extends ChangeNotifier {
         );
         Map<String, dynamic> responseData = jsonDecode(response.body);
         isLogin = false;
+        print(responseData);
         notifyListeners();
         if (response.statusCode == 200) {
+          method = responseData['auth_method'];
           logged = true;
-          accessToken = responseData['token'];
-          await prefs.setString('accessToken', accessToken);
+          if (responseData == null) {
+            token = null;
+            setAuthToken(token);
+          } else {
+            accessToken = responseData['token'];
+
+            setAuthToken(accessToken);
+          }
 
           // refreshToken = responseData['refresh_token'];
           // expireTime = responseData['expires_in'];
@@ -54,10 +63,10 @@ class AuthProvider extends ChangeNotifier {
         } else {
           error = response.statusCode.toString();
         }
+        return responseData;
       } catch (e) {
         error = e.toString();
       }
-      return accessToken;
     }
   }
 
@@ -86,4 +95,27 @@ class AuthProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
   }
+
+  String? _authToken;
+
+  String? get authToken => _authToken;
+
+  setAuthToken(token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // _authToken = token;
+    print('auth$_authToken');
+    if (token == null) {
+      _authToken = null;
+    } else {
+      await prefs.setString('accessToken', accessToken);
+      _authToken = prefs.getString('accessToken');
+      // await prefs.setString('auth_token', token);
+    }
+    print('getauth$_authToken');
+
+    notifyListeners();
+  }
 }
+
+
