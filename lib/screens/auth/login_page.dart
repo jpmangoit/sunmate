@@ -26,7 +26,7 @@ class LoginPageState extends State<LoginPage> {
   String isSignIn = 'initial';
   UserLogin? loginModal;
   var visiblePass = false;
-  var token;
+  var res;
 
   final _priceFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
@@ -43,9 +43,9 @@ class LoginPageState extends State<LoginPage> {
       loginModal = UserLogin(email: email, password: password);
       Provider.of<AuthProvider>(context, listen: false)
           .updateLoginModel(loginModal!);
-      token = await Provider.of<AuthProvider>(context, listen: false).login();
-      print(token);
-      if (token == null) {
+      res = await Provider.of<AuthProvider>(context, listen: false).login();
+      print(res);
+      if (res['token'] == null) {
         setState(() {
           isSignIn = 'initial';
           // error = getTranslated(context, 'k_valid_email_pass');
@@ -69,7 +69,11 @@ class LoginPageState extends State<LoginPage> {
         isSignIn = 'completed';
         changeButton = true;
       });
-      await Navigator.pushReplacementNamed(context, '/verification');
+      if (res['auth_method'] == 'google') {
+        await Navigator.pushReplacementNamed(context, '/googleVerification');
+      } else {
+        await Navigator.pushReplacementNamed(context, '/verification');
+      }
     }
   }
 

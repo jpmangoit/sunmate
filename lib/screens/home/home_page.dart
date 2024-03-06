@@ -4,6 +4,7 @@ import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/localization/demo_localization.dart';
 import 'package:sunmate/main.dart';
 import 'package:sunmate/models/language.dart';
+import 'package:sunmate/providers/home_data_provider.dart';
 import 'package:sunmate/widgets/home/bottom_nav_bar.dart';
 import 'package:sunmate/widgets/home/home_CTPVL.dart';
 import 'package:sunmate/widgets/home/home_chart.dart';
@@ -66,6 +67,15 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       isSwitched = value;
     });
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<HomeDataProvider>(context).homeData(context);
+    });
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
