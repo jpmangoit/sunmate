@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:sunmate/constants/colors_contant.dart';
 import 'package:sunmate/providers/auth_provider.dart';
 import 'package:sunmate/screens/auth/login_page.dart';
+import 'package:sunmate/widgets/auth/terms_condition.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../localization/localization_contants.dart';
@@ -107,46 +109,16 @@ class SignupPageState extends State<SignupPage> {
       );
     }
   }
-
   Future<void> _showMyDialog(themeNotifier) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: getColors(themeNotifier.isDark, 'inputColor'),
-          title: Text('Terms & Conditions',
-              style: TextStyle(
-                  color: getColors(themeNotifier.isDark, 'textColor'))),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    style: TextStyle(
-                        color: getColors(themeNotifier.isDark, 'textColor'))),
-                Text(
-                  'Would you like to agree?',
-                  style: TextStyle(
-                      color: getColors(themeNotifier.isDark, 'textColor')),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Close',
-                  style: TextStyle(
-                      color: getColors(themeNotifier.isDark, 'textColor'))),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
+        return TermsCondition();
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -245,12 +217,15 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       if (error.isNotEmpty && error.containsKey('name'))
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
                           child: Text(
                             error['name'][0],
                             style: TextStyle(
-                              color: getColors(
-                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                              color:
+                                  getColors(themeNotifier.isDark, 'errorColor'),
+                              fontSize: 12.0,
+                            ),
                           ),
                         ),
                       const SizedBox(
@@ -285,12 +260,15 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       if (error.isNotEmpty && error.containsKey('email'))
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
                           child: Text(
                             error['email'][0],
                             style: TextStyle(
-                              color: getColors(
-                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                              color:
+                                  getColors(themeNotifier.isDark, 'errorColor'),
+                              fontSize: 12.0,
+                            ),
                           ),
                         ),
                       const SizedBox(
@@ -325,12 +303,15 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       if (error.isNotEmpty && error.containsKey('zipcode'))
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
                           child: Text(
                             error['zipcode'][0],
                             style: TextStyle(
-                              color: getColors(
-                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                              color:
+                                  getColors(themeNotifier.isDark, 'errorColor'),
+                              fontSize: 12.0,
+                            ),
                           ),
                         ),
                       const SizedBox(
@@ -365,12 +346,15 @@ class SignupPageState extends State<SignupPage> {
                       ),
                       if (error.isNotEmpty && error.containsKey('password'))
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
                           child: Text(
                             error['password'][0],
                             style: TextStyle(
-                              color: getColors(
-                                  themeNotifier.isDark, 'errorColor'), fontSize: 12.0,),
+                              color:
+                                  getColors(themeNotifier.isDark, 'errorColor'),
+                              fontSize: 12.0,
+                            ),
                           ),
                         ),
                       const SizedBox(
