@@ -72,263 +72,447 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<HomeDataProvider>(context).homeData(context);
+      Provider.of<HomeDataProvider>(context, listen: false).homeData(context);
     });
     // TODO: implement initState
     super.initState();
   }
 
+  var lightIcons = [
+    'assets/images/light-icon1.png',
+    'assets/images/light-icon2.png',
+    'assets/images/light-icon3.png',
+    'assets/images/light-icon4.png',
+  ];
+  var darkIcons = [
+    'assets/images/dark-icon1.png',
+    'assets/images/dark-icon2.png',
+    'assets/images/dark-icon3.png',
+    'assets/images/dark-icon4.png',
+  ];
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-      return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: getColors(
-                themeNotifier.isDark, 'textColor'), // Change your color here
-          ),
-          backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
-          centerTitle: true,
-          title: Text(
-            getTranslated(context, 'k_home_page'),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: getColors(themeNotifier.isDark, 'textColor')),
-          ),
-          actions: <Widget>[
-            const Padding(padding: EdgeInsets.all(5), child: LanguageSelect()),
-            IconButton(
-                icon: Icon(
-                  themeNotifier.isDark ? Icons.wb_sunny : Icons.wb_sunny,
-                  color: Color(0xFFF6C517),
-                ),
-                onPressed: () {
-                  themeNotifier.isDark
-                      ? themeNotifier.isDark = false
-                      : themeNotifier.isDark = true;
-                }),
-          ],
-        ),
-        backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
-        resizeToAvoidBottomInset: true,
-        drawer: const MainDrawerPage(),
-        body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.all(25),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      getTranslated(context, 'k_home_load_info'),
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: getColors(themeNotifier.isDark, 'textColor')),
+          return Scaffold(
+            appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: getColors(
+                    themeNotifier.isDark, 'textColor'), // Change your color here
+              ),
+              backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+              centerTitle: true,
+              title: Text(
+                getTranslated(context, 'k_home_page'),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: getColors(themeNotifier.isDark, 'textColor')),
+              ),
+              actions: <Widget>[
+                const Padding(padding: EdgeInsets.all(5), child: LanguageSelect()),
+                IconButton(
+                    icon: Icon(
+                      themeNotifier.isDark ? Icons.wb_sunny : Icons.wb_sunny,
+                      color: Color(0xFFF6C517),
                     ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        border: Border.all(
-                          color:
-                              getColors(themeNotifier.isDark, 'textColorblack'),
-                        ),
-                        color: getColors(themeNotifier.isDark, 'dropdownColor'),
-                      ),
-                      child: DropdownButton(
-                        // isExpanded: true,
-                        dropdownColor:
-                            getColors(themeNotifier.isDark, 'dropdownColor'),
-                        style: TextStyle(
-                            color: getColors(
-                                themeNotifier.isDark, 'textColorblack'),
-                            fontSize: 12),
-                        value: dropdownvalue,
-                        isDense: true,
-                        underline: const SizedBox(),
-                        icon: Icon(
-                          Icons.keyboard_arrow_down,
-                          color:
-                              getColors(themeNotifier.isDark, 'textColorblack'),
-                        ),
-                        items: items.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                HomeChartPage(),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: getColors(themeNotifier.isDark, 'buttonColor'),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '\$12.15',
-                              style: TextStyle(
-                                color: getColors(
-                                    themeNotifier.isDark, 'iconColor'),
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              '/',
-                              style: TextStyle(
-                                color: getColors(
-                                    themeNotifier.isDark, 'iconColor'),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              'Kwh',
-                              style: TextStyle(
-                                color: getColors(
-                                    themeNotifier.isDark, 'iconColor'),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          'Current Power Price',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color:
-                                getColors(themeNotifier.isDark, 'borderColor'),
-                          ),
-                        ),
-                      ]),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      getTranslated(context, 'k_home_today_load'),
-                      style: TextStyle(
-                          color: getColors(themeNotifier.isDark, 'textColor')),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                like = !like;
-                                if (like) {
-                                  disLike = false;
-                                }
-                              });
-                            },
-                            icon: like
-                                ? Icon(
-                                    Icons.thumb_up_alt,
-                                    color: getColors(
-                                        themeNotifier.isDark, 'buttonColor'),
-                                  )
-                                : Icon(
-                                    Icons.thumb_up_alt,
-                                  )),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                disLike = !disLike;
-                                if (disLike) {
-                                  like = false;
-                                }
-                              });
-                            },
-                            icon: disLike
-                                ? Icon(
-                                    Icons.thumb_down,
-                                    color: getColors(
-                                        themeNotifier.isDark, 'buttonColor'),
-                                  )
-                                : Icon(Icons.thumb_down))
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const TodayLoadPage(),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Row(
-                  children: [
-                    HomeCTPVPage(heading: "Internal CT"),
-                    HomeCTPVPage(heading: "External CT"),
-                    HomeCTPVPage(heading: "PV"),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      getTranslated(context, 'k_home_today_statistics'),
-                      style: TextStyle(
-                          color: getColors(themeNotifier.isDark, 'textColor')),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TodayStaticsticsPage(dataStatistics: DataStaticstics),
+                    onPressed: () {
+                      themeNotifier.isDark
+                          ? themeNotifier.isDark = false
+                          : themeNotifier.isDark = true;
+                    }),
               ],
             ),
-          ),
-        ),
-        bottomNavigationBar: const SizedBox(
-          height: 65,
-          child: BottomNavBarPage(),
-        ),
-      );
-    });
+            backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+            resizeToAvoidBottomInset: true,
+            drawer: const MainDrawerPage(),
+            body: SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.all(25),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          getTranslated(context, 'k_home_load_info'),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: getColors(themeNotifier.isDark, 'textColor')),
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            border: Border.all(
+                              color:
+                              getColors(themeNotifier.isDark, 'textColorblack'),
+                            ),
+                            color: getColors(themeNotifier.isDark, 'dropdownColor'),
+                          ),
+                          child: DropdownButton(
+                            // isExpanded: true,
+                            dropdownColor:
+                            getColors(themeNotifier.isDark, 'dropdownColor'),
+                            style: TextStyle(
+                                color: getColors(
+                                    themeNotifier.isDark, 'textColorblack'),
+                                fontSize: 12),
+                            value: dropdownvalue,
+                            isDense: true,
+                            underline: const SizedBox(),
+                            icon: Icon(
+                              Icons.keyboard_arrow_down,
+                              color:
+                              getColors(themeNotifier.isDark, 'textColorblack'),
+                            ),
+                            items: items.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownvalue = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    HomeChartPage(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: getColors(themeNotifier.isDark, 'buttonColor'),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '\$12.15',
+                                  style: TextStyle(
+                                    color: getColors(
+                                        themeNotifier.isDark, 'iconColor'),
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '/',
+                                  style: TextStyle(
+                                    color: getColors(
+                                        themeNotifier.isDark, 'iconColor'),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  'Kwh',
+                                  style: TextStyle(
+                                    color: getColors(
+                                        themeNotifier.isDark, 'iconColor'),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'Current Power Price',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                color:
+                                getColors(themeNotifier.isDark, 'borderColor'),
+                              ),
+                            ),
+                          ]),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          getTranslated(context, 'k_home_today_load'),
+                          style: TextStyle(
+                              color: getColors(themeNotifier.isDark, 'textColor')),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    like = !like;
+                                    if (like) {
+                                      disLike = false;
+                                    }
+                                  });
+                                },
+                                icon: like
+                                    ? Icon(
+                                  Icons.thumb_up_alt,
+                                  color: getColors(
+                                      themeNotifier.isDark, 'buttonColor'),
+                                )
+                                    : Icon(
+                                  Icons.thumb_up_alt,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    disLike = !disLike;
+                                    if (disLike) {
+                                      like = false;
+                                    }
+                                  });
+                                },
+                                icon: disLike
+                                    ? Icon(
+                                  Icons.thumb_down,
+                                  color: getColors(
+                                      themeNotifier.isDark, 'buttonColor'),
+                                )
+                                    : Icon(Icons.thumb_down))
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Consumer<HomeDataProvider>(
+                      builder: (context, value, child) {
+                        return value.loader
+                            ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                            : Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+                              children: [
+                                TodayLoadPage(
+                                    img: themeNotifier.isDark
+                                        ? darkIcons[0]
+                                        : lightIcons[0],
+                                    name: 'House Load',
+                                    watt: value.res['current_status']
+                                    ['houseload']['current_usage_watt'],
+                                    forecast: 'Today:' +
+                                        " " +
+                                        value.res['current_status']
+                                        ['houseload']
+                                        ['today_forecast_kwh']
+                                            .toString() +
+                                        "" +
+                                        ' KWH',
+                                    usage: 'Today ' +
+                                        " " +
+                                        value.res['current_status']
+                                        ['houseload']
+                                        ['today_usage_kwh']
+                                            .toString() +
+                                        "" +
+                                        ' KWH'),
+                                TodayLoadPage(
+                                    img: themeNotifier.isDark
+                                        ? darkIcons[1]
+                                        : lightIcons[1],
+                                    name: 'Solar Production',
+                                    watt: value.res['current_status']['solar']
+                                    ['current_production_watt']
+                                        .toString(),
+                                    forecast: 'Today ' +
+                                        " " +
+                                        value.res['current_status']['solar']
+                                        ['today_forecast_kwh']
+                                            .toString() +
+                                        "" +
+                                        ' KWH',
+                                    usage: 'Today ' +
+                                        " " +
+                                        value.res['current_status']['solar']
+                                        ['today_production_kwh']
+                                            .toString()),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+                              children: [
+                                TodayLoadPage(
+                                    img: themeNotifier.isDark
+                                        ? darkIcons[2]
+                                        : lightIcons[2],
+                                    name: 'Grid Load',
+                                    watt: value.res['current_status']['grid']
+                                    ['current_usage_watt']
+                                        .toString(),
+                                    forecast: 'Today ' +
+                                        " " +
+                                        value.res['current_status']['grid']
+                                        ['today_bought_usage_kwh']
+                                            .toString() +
+                                        "" +
+                                        ' KWH',
+                                    usage: 'Today ' +
+                                        " " +
+                                        value.res['current_status']['grid']
+                                        ['today_sold_usage_kwh']
+                                            .toString()),
+                                TodayLoadPage(
+                                    img: themeNotifier.isDark
+                                        ? darkIcons[3]
+                                        : lightIcons[3],
+                                    name: 'Battery',
+                                    watt: value.res['current_status']
+                                    ['battery']['current_usage_watt']
+                                        .toString(),
+                                    forecast: 'Today ' +
+                                        " " +
+                                        value.res['current_status']['battery']
+                                        ['today_charge_usage_kwh']
+                                            .toString() +
+                                        "" +
+                                        ' KWH',
+                                    usage: 'Today ' +
+                                        " " +
+                                        value.res['current_status']['battery']
+                                        ['today_discharge_usage_kwh']
+                                            .toString()),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Consumer<HomeDataProvider>(builder: (context, value, child) {
+                      return value.loader
+                          ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                          : Row(
+                        children: [
+                          HomeCTPVPage(
+                            heading: "Internal CT",
+                            label1: 'L1: ' +
+                                "" +
+                                value.res['current_status']['internal-ct']
+                                ['current_l1_w']
+                                    .toString() +
+                                " A",
+                            label2: 'L2: ' +
+                                "" +
+                                value.res['current_status']['internal-ct']
+                                ['current_l2_w']
+                                    .toString() +
+                                " A",
+                            label3: 'L3: ' +
+                                "" +
+                                value.res['current_status']['internal-ct']
+                                ['current_l3_w']
+                                    .toString() +
+                                " A",
+                          ),
+                          HomeCTPVPage(
+                            heading: "External CT",
+                            label1: 'L1: ' +
+                                "" +
+                                value.res['current_status']['external-ct']
+                                ['current_l1_w']
+                                    .toString() +
+                                " A",
+                            label2: 'L2: ' +
+                                "" +
+                                value.res['current_status']['external-ct']
+                                ['current_l2_w']
+                                    .toString() +
+                                " A",
+                            label3: 'L3: ' +
+                                "" +
+                                value.res['current_status']['external-ct']
+                                ['current_l3_w']
+                                    .toString() +
+                                " A",
+                          ),
+                          HomeCTPVPage(
+                            heading: "PV",
+                            label1: 'PV-1: ' +
+                                "" +
+                                value.res['current_status']
+                                ['solar-production']['pv-1']
+                                    .toString() +
+                                "W",
+                            label2: 'PV-2: ' +
+                                "" +
+                                value.res['current_status']
+                                ['solar-production']['pv-2']
+                                    .toString() +
+                                "W",
+                            label3: 'Total PV: ' +
+                                "" +
+                                value.res['current_status']
+                                ['solar-production']['pv-total']
+                                    .toString() +
+                                "W",
+                          ),
+                        ],
+                      );
+                    }),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          getTranslated(context, 'k_home_today_statistics'),
+                          style: TextStyle(
+                              color: getColors(themeNotifier.isDark, 'textColor')),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TodayStaticsticsPage(dataStatistics: DataStaticstics),
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: const SizedBox(
+              height: 65,
+              child: BottomNavBarPage(),
+            ),
+          );
+        });
   }
 }

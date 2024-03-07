@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:sunmate/localization/demo_localization.dart';
 import 'package:sunmate/providers/auth_provider.dart';
 import 'package:sunmate/providers/googe_verification_proiver.dart';
-import 'package:sunmate/providers/home_provider.dart';
+import 'package:sunmate/providers/home_data_provider.dart';
 import 'package:sunmate/providers/theme_provider.dart';
 import 'package:sunmate/routes/routes.dart';
 import 'package:sunmate/screens/auth/google_verification_page.dart';
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => HomeDataProvider()),
         ChangeNotifierProvider(create: (_) => GoogleVerificationProvider())
       ],
       child: Sizer(builder: (BuildContext context, Orientation orientation,

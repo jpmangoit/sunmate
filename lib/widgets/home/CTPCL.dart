@@ -16,21 +16,22 @@ class _CTPVLPageState extends State<CTPVLPage> {
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 3, horizontal: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          border: Border.all(
-              color: getColors(themeNotifier.isDark, 'buttonColor'), width: 1),
-        ),
-        child: Text(
-          widget.label,
-          style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 10,
-              color: getColors(themeNotifier.isDark, 'buttonColor')),
-        ),
-      );
-    });
+          return Container(
+            // width: MediaQuery.of(context).size.width * 0.2,
+            padding: EdgeInsets.symmetric(vertical: 3, horizontal: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              border: Border.all(
+                  color: getColors(themeNotifier.isDark, 'buttonColor'), width: 1),
+            ),
+            child: Text(
+              widget.label,
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10,
+                  color: getColors(themeNotifier.isDark, 'buttonColor')),
+            ),
+          );
+        });
   }
 }

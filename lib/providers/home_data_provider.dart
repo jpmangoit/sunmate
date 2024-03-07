@@ -1,28 +1,33 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import '../config/environment.dart';
-import 'package:sunmate/providers/auth_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeDataProvider extends ChangeNotifier {
   var error;
   var loader = false;
   var response;
   var token;
+  var res;
   homeData(context) async {
-    token = Provider.of<AuthProvider>(context).authToken;
+    final pref = await SharedPreferences.getInstance();
+    token = pref.getString('token');
     print('hometoken$token');
     try {
       var apiUrl = 'https://api.sunmateio.dk/dashboard/live';
-      response = http.get(
+      loader = true;
+      notifyListeners();
+      response = await http.get(
         Uri.parse(apiUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': "Bearer $token"
-        },
+        headers: {'authorization': "Bearer $token"},
       );
+      loader = false;
+      notifyListeners();
       if (response.statusCode == 200) {
-        print(response.body);
+        res = jsonDecode(response.body);
+
+        notifyListeners();
       } else {
         error = response.body;
       }
