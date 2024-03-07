@@ -39,10 +39,10 @@ class GoogleVerificationPageState extends State<GoogleVerificationPage> {
     if (_formKey.currentState!.validate()) {
       dynamic result;
       print(code);
-      result = Provider.of<GoogleVerificationProvider>(context, listen: false)
+      result = await Provider.of<GoogleVerificationProvider>(context, listen: false)
           .googleVerification(code, context);
-      await pref.setString('token', result['token']);
-      if (!mounted) return;
+      // await pref.setString('token', result['token']);
+      // if (!mounted) return;
       if (result['success'] == true) {
         setState(() {
           isSignIn = 'completed';
