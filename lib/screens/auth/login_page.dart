@@ -7,6 +7,7 @@ import '../../constants/colors_contant.dart';
 import '../../localization/localization_contants.dart';
 import '../../models/login.dart';
 import '../../providers/theme_provider.dart';
+import '../../widgets/shared/snackbar_common.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -45,18 +46,7 @@ class LoginPageState extends State<LoginPage> {
       if (res['token'] == null) {
         setState(() {
           isSignIn = 'initial';
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              dismissDirection: DismissDirection.up,
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height - 100,
-                  left: 10,
-                  right: 10),
-              content: Text(getTranslated(context, 'k_valid_email_pass')),
-              backgroundColor: Color(0xFFB3261E),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          showCustomSnackbar(context, getTranslated(context, 'k_valid_email_pass'), true);
         });
         return;
       }

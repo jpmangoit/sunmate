@@ -11,6 +11,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../localization/localization_contants.dart';
 import '../../providers/theme_provider.dart';
 import '../../widgets/shared/language_select.dart';
+import '../../widgets/shared/snackbar_common.dart';
 
 class GoogleVerificationPage extends StatefulWidget {
   const GoogleVerificationPage({Key? key}) : super(key: key);
@@ -48,35 +49,8 @@ class GoogleVerificationPageState extends State<GoogleVerificationPage> {
         });
         await Navigator.pushReplacementNamed(context, '/firstHome');
       } else {
-        if(result['success'] == false) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              dismissDirection: DismissDirection.up,
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height - 100,
-                  left: 10,
-                  right: 10),
-              content: Text(result['message']),
-              backgroundColor: getColors(
-                  themeNotifier.isDark, 'errorColor'),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              dismissDirection: DismissDirection.up,
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height - 100,
-                  left: 10,
-                  right: 10),
-              content: Text('Something went wrong!'),
-              backgroundColor: getColors(
-                  themeNotifier.isDark, 'errorColor'),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
+        String errorMessage = result['message'] ?? 'Something went wrong!';
+        showCustomSnackbar(context, errorMessage, result['success'] == false);
         await Navigator.pushReplacementNamed(context, '/');
       }
     }
