@@ -102,15 +102,12 @@ class AuthProvider extends ChangeNotifier {
 
   setAuthToken(token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // _authToken = token;
     print('auth$_authToken');
     if (token == null) {
       _authToken = null;
     } else {
       await prefs.setString('accessToken', accessToken);
       _authToken = prefs.getString('accessToken');
-      // await prefs.setString('auth_token', token);
     }
     print('getauth$_authToken');
 

@@ -34,19 +34,21 @@ class GoogleVerificationPageState extends State<GoogleVerificationPage> {
     super.dispose();
   }
 
-  moveToHome(BuildContext context) async {
+  moveToHome(BuildContext context, themeNotifier) async {
     final pref = await SharedPreferences.getInstance();
     if (_formKey.currentState!.validate()) {
       dynamic result;
       print(code);
       result = await Provider.of<GoogleVerificationProvider>(context, listen: false)
           .googleVerification(code, context);
-      // await pref.setString('token', result['token']);
-      // if (!mounted) return;
       if (result['success'] == true) {
         setState(() {
           isSignIn = 'completed';
           changeButton = true;
+        });
+        await Navigator.pushReplacementNamed(context, '/firstHome');
+      } else {
+        if(result['success'] == false) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               dismissDirection: DismissDirection.up,
@@ -54,13 +56,28 @@ class GoogleVerificationPageState extends State<GoogleVerificationPage> {
                   bottom: MediaQuery.of(context).size.height - 100,
                   left: 10,
                   right: 10),
-              content: Text(getTranslated(context, 'k_form_login_success')),
-              backgroundColor: Color(0xFF1AB58D),
+              content: Text(result['message']),
+              backgroundColor: getColors(
+                  themeNotifier.isDark, 'errorColor'),
               behavior: SnackBarBehavior.floating,
             ),
           );
-        });
-        await Navigator.pushReplacementNamed(context, '/firstHome');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              dismissDirection: DismissDirection.up,
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height - 100,
+                  left: 10,
+                  right: 10),
+              content: Text('Something went wrong!'),
+              backgroundColor: getColors(
+                  themeNotifier.isDark, 'errorColor'),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+        await Navigator.pushReplacementNamed(context, '/');
       }
     }
   }
@@ -122,32 +139,32 @@ class GoogleVerificationPageState extends State<GoogleVerificationPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Text(
-                        getTranslated(context, 'k_verify_heading'),
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w400,
-                          color: getColors(themeNotifier.isDark, 'textColor'),
-                        ),
-                      ),
-                      Wrap(children: [
-                        Expanded(
-                          child: Text(
-                            getTranslated(context, 'k_verify_google_code'),
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w600,
-                              color: getColors(
-                                  themeNotifier.isDark, 'buttonColor'),
+                      RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: getTranslated(
+                                  context, 'k_verify_heading'),
+                              style:  TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.w400,
+                                color: getColors(themeNotifier.isDark, 'textColor'),
+                              ),
                             ),
-                          ),
-                        ),
-                      ]),
+                            TextSpan(
+                                text: getTranslated(context, 'k_verify_google_code'),
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w600,
+                                  color: getColors(
+                                      themeNotifier.isDark, 'buttonColor'),
+                                ),
+                            ),
+                          ])),
                     ],
                   ),
-
                   // SizedBox(height: 20),
 
                   const SizedBox(
@@ -207,7 +224,7 @@ class GoogleVerificationPageState extends State<GoogleVerificationPage> {
                                   setState(() {
                                     isSignIn = 'loading';
                                   }),
-                                  moveToHome(context)
+                                  moveToHome(context, themeNotifier)
                                 }
                               : null,
                           child: AnimatedContainer(

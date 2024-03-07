@@ -20,13 +20,18 @@ class GoogleVerificationProvider extends ChangeNotifier {
       response = await http.post(Uri.parse(apiUrl),
           headers: {'authorization': "Bearer $token"},
           body: {"auth_method": "google", "one_time_password": code});
-      // print(response);
-      print(jsonDecode(response.body));
+      print(res);
       res = jsonDecode(response.body);
-      await pref.setString('token', res['token']);
 
-      print(response.body);
-      return res;
+      if (response.statusCode == 200) {
+        if(res['token']) {
+          await pref.setString('token', res['token']);
+        }
+        return res;
+      } else {
+        return res;
+      }
+
     } catch (e) {
       err = e.toString();
     }
