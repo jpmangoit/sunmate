@@ -4,6 +4,7 @@ import 'package:sunmate/constants/colors_contant.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../localization/localization_contants.dart';
+import '../../providers/googe_verification_proiver.dart';
 import '../../providers/theme_provider.dart';
 import '../../widgets/shared/language_select.dart';
 
@@ -22,7 +23,11 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   final _formKey = GlobalKey<FormState>();
   String selectedLanguage = 'English';
   bool isChecked = false;
-
+  TextEditingController pin1 = TextEditingController();
+  TextEditingController pin2 = TextEditingController();
+  TextEditingController pin3 = TextEditingController();
+  TextEditingController pin4 = TextEditingController();
+  var code;
   @override
   void dispose() {
     _priceFocusNode.dispose();
@@ -32,32 +37,45 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       dynamic result;
-      // result = await Auth().otpVerification(email, password);
-      // if (result != 200) {
-      //   setState(() {
-      //     isSignIn = 'initial';
-      //     error = 'please enter a valid email and password';
-      //   });
-      //   return;
-      // }
-      if (!mounted) return;
-      setState(() {
-        isSignIn = 'completed';
-        changeButton = true;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            dismissDirection: DismissDirection.up,
-            margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height - 100,
-                left: 10,
-                right: 10),
-            content: Text(getTranslated(context, 'k_form_login_success')),
-            backgroundColor: Color(0xFF1AB58D),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      });
-      await Navigator.pushReplacementNamed(context, '/firstHome');
+      print(pin1.text.toString() +
+          "" +
+          pin2.text.toString() +
+          "" +
+          pin3.text.toString() +
+          "" +
+          pin4.text.toString());
+      code = pin1.text.toString() +
+          "" +
+          pin2.text.toString() +
+          "" +
+          pin3.text.toString() +
+          "" +
+          pin4.text.toString();
+      result =
+      await Provider.of<GoogleVerificationProvider>(context, listen: false)
+          .googleVerification(code, context);
+      if (result['success'] == true) {
+        setState(() {
+          isSignIn = 'completed';
+          changeButton = true;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              dismissDirection: DismissDirection.up,
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height - 100,
+                  left: 10,
+                  right: 10),
+              content: Text(getTranslated(context, 'k_form_login_success')),
+              backgroundColor: Color(0xFF1AB58D),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        });
+        await Navigator.pushReplacementNamed(context, '/firstHome');
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(result.toString())));
+      }
     }
   }
 
@@ -83,13 +101,14 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
     }
   }
 
-  Widget _textFieldOTP({bool? first, last, themeNotifier}) {
+  Widget _textFieldOTP({bool? first, last, pin, themeNotifier}) {
     return Container(
       // color: getColors(themeNotifier.isDark, 'inputColor'),
       height: 65,
       child: AspectRatio(
         aspectRatio: 1.0,
         child: TextField(
+          controller: pin,
           autofocus: true,
           onChanged: (value) {
             if (value.length == 1 && last == false) {
@@ -134,152 +153,156 @@ class CodeVerificationPageState extends State<CodeVerificationPage> {
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
-      return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: getColors(
-                  themeNotifier.isDark, 'textColor'), //change your color here
-            ),
-            backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
-            centerTitle: true,
-            title: Text(
-              getTranslated(context, 'k_verify'),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: getColors(themeNotifier.isDark, 'textColor')),
-            ),
-            actions: const <Widget>[
-              Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
-            ],
-          ),
-          backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
-          resizeToAvoidBottomInset: false,
-          body: Form(
-            key: _formKey,
-            child: Container(
-              padding: const EdgeInsets.all(30),
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        getTranslated(context, 'k_verify_heading'),
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w400,
-                          color: getColors(themeNotifier.isDark, 'textColor'),
-                        ),
-                      ),
-                      Text(
-                        getTranslated(context, 'k_verify_digits_code'),
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w600,
-                          color: getColors(themeNotifier.isDark, 'buttonColor'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    getTranslated(context, 'k_verify_sub_text'),
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color:
-                            getColors(themeNotifier.isDark, 'GreyTextColor')),
-                  ),
-                  const SizedBox(
-                    height: 40.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _textFieldOTP(
-                          first: true,
-                          last: false,
-                          themeNotifier: themeNotifier),
-                      _textFieldOTP(
-                          first: false,
-                          last: false,
-                          themeNotifier: themeNotifier),
-                      _textFieldOTP(
-                          first: false,
-                          last: false,
-                          themeNotifier: themeNotifier),
-                      _textFieldOTP(
-                          first: false,
-                          last: true,
-                          themeNotifier: themeNotifier),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        getTranslated(context, 'k_verify_resend'),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: getColors(themeNotifier.isDark, 'textColor'),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        getTranslated(context, 'k_verify_resend_code'),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: getColors(themeNotifier.isDark, 'buttonColor'),
-                          decoration: TextDecoration.underline,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  Expanded(
-                    child: Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: Material(
-                        color: getColors(themeNotifier.isDark, 'buttonColor'),
-                        borderRadius: BorderRadius.circular(10),
-                        child: InkWell(
-                          onTap: () => _formKey.currentState!.validate()
-                              ? {
-                                  setState(() {
-                                    isSignIn = 'loading';
-                                  }),
-                                  moveToHome(context)
-                                }
-                              : null,
-                          child: AnimatedContainer(
-                              duration: const Duration(seconds: 1),
-                              width: 400,
-                              height: 60,
-                              alignment: Alignment.center,
-                              child: verifyButton(themeNotifier)),
-                        ),
-                      ),
-                    ),
-                  ),
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: getColors(
+                      themeNotifier.isDark, 'textColor'), //change your color here
+                ),
+                backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+                centerTitle: true,
+                title: Text(
+                  getTranslated(context, 'k_verify'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: getColors(themeNotifier.isDark, 'textColor')),
+                ),
+                actions: const <Widget>[
+                  Padding(padding: EdgeInsets.all(5), child: LanguageSelect())
                 ],
               ),
+              backgroundColor: getColors(themeNotifier.isDark, 'backgroundColor'),
+              resizeToAvoidBottomInset: false,
+              body: Form(
+                key: _formKey,
+                child: Container(
+                  padding: const EdgeInsets.all(30),
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            getTranslated(context, 'k_verify_heading'),
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w400,
+                              color: getColors(themeNotifier.isDark, 'textColor'),
+                            ),
+                          ),
+                          Text(
+                            getTranslated(context, 'k_verify_digits_code'),
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w600,
+                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        getTranslated(context, 'k_verify_sub_text'),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color:
+                            getColors(themeNotifier.isDark, 'GreyTextColor')),
+                      ),
+                      const SizedBox(
+                        height: 40.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _textFieldOTP(
+                              first: true,
+                              last: false,
+                              pin: pin1,
+                              themeNotifier: themeNotifier),
+                          _textFieldOTP(
+                              first: false,
+                              last: false,
+                              pin: pin2,
+                              themeNotifier: themeNotifier),
+                          _textFieldOTP(
+                              first: false,
+                              last: false,
+                              pin: pin3,
+                              themeNotifier: themeNotifier),
+                          _textFieldOTP(
+                              first: false,
+                              last: true,
+                              pin: pin4,
+                              themeNotifier: themeNotifier),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            getTranslated(context, 'k_verify_resend'),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: getColors(themeNotifier.isDark, 'textColor'),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            getTranslated(context, 'k_verify_resend_code'),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: getColors(themeNotifier.isDark, 'buttonColor'),
+                              decoration: TextDecoration.underline,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: FractionalOffset.bottomCenter,
+                          child: Material(
+                            color: getColors(themeNotifier.isDark, 'buttonColor'),
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              onTap: () => _formKey.currentState!.validate()
+                                  ? {
+                                setState(() {
+                                  isSignIn = 'loading';
+                                }),
+                                moveToHome(context)
+                              }
+                                  : null,
+                              child: AnimatedContainer(
+                                  duration: const Duration(seconds: 1),
+                                  width: 400,
+                                  height: 60,
+                                  alignment: Alignment.center,
+                                  child: verifyButton(themeNotifier)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      );
-    });
+          );
+        });
   }
 }

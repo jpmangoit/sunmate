@@ -45,10 +45,10 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
         if (response.statusCode == 200) {
           method = responseData['auth_method'];
+          await prefs.setString('method', method);
           logged = true;
-          if (responseData == null) {
-            token = null;
-            setAuthToken(token);
+          if (method == 'none') {
+            await prefs.setString('token', responseData['token']);
           } else {
             accessToken = responseData['token'];
 
@@ -102,17 +102,18 @@ class AuthProvider extends ChangeNotifier {
 
   setAuthToken(token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // _authToken = token;
     print('auth$_authToken');
     if (token == null) {
       _authToken = null;
     } else {
       await prefs.setString('accessToken', accessToken);
       _authToken = prefs.getString('accessToken');
+      // await prefs.setString('auth_token', token);
     }
     print('getauth$_authToken');
 
     notifyListeners();
   }
 }
-
-
